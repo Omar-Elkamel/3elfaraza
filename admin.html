@@ -4,24 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f523e">
 <title>تعديل موقع ع الفرازة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* VOICE: a back-office form, calm and quick
+/* VOICE: a calm back office for the shop window
    IDEA: the shop's price board, editable
-   PICTURE: the lists themselves
+   PICTURE: the lists themselves with photo thumbnails
    COLOUR and TYPE: brand green, orange accent, cream; Baloo Bhaijaan 2 + Cairo
-   LAYOUT: one column of sections, sticky export button */
+   LAYOUT: one column of sections, sticky save bar */
 :root{color-scheme:light dark;--bg:light-dark(#f7f2e6,#0f1813);--card:light-dark(#fffdf8,#17231b);--ink:light-dark(#1b2a21,#eef3ec);--mut:light-dark(#5f6f64,#a3b3a8);--line:light-dark(#e7dfcc,#27362c);--g:#1f523e;--g2:light-dark(#1f523e,#9bd07f);--o:#f47b20;--soft:light-dark(#edf2e6,#1b2a21);--red:light-dark(#b3261e,#ff8a80)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Cairo,system-ui,sans-serif;padding-bottom:110px}
-header{background:var(--g);color:#fff;padding:16px}
+header{background:var(--g);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 header img{height:40px}
-header p{margin:6px 0 0;opacity:.9;font-size:15px}
+header .who{font-size:14px;opacity:.9}
 main{max-width:760px;margin:0 auto;padding:16px}
-h2{font-family:"Baloo Bhaijaan 2",Cairo,sans-serif;font-size:24px;margin:22px 0 4px;color:var(--g2)}
+h2{font-family:"Baloo Bhaijaan 2",Cairo,sans-serif;font-size:24px;margin:24px 0 4px;color:var(--g2)}
 .hint{color:var(--mut);font-size:14px;margin:0 0 10px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
@@ -29,73 +30,125 @@ label{display:block}label span{display:block;font-size:13px;color:var(--mut);fon
 input,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:inherit;min-height:44px}
 textarea{min-height:84px;resize:vertical}
 .full{grid-column:1/-1}
-.btn{border:0;border-radius:12px;min-height:44px;padding:8px 16px;font:800 15px Cairo,sans-serif;cursor:pointer;background:var(--soft);color:var(--g2)}
-.btn.o{background:var(--o);color:#fff}.btn.del{background:none;color:var(--red)}
+.btn{border:0;border-radius:12px;min-height:44px;padding:8px 16px;font:800 15px Cairo,sans-serif;cursor:pointer;background:var(--soft);color:var(--g2);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.btn.o{background:var(--o);color:#fff}.btn.del{background:none;color:var(--red)}.btn.w{background:#fff;color:#1f1f1f;border:1px solid #dadce0}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .top b{font-weight:800}
+.img{display:flex;gap:10px;align-items:center}
+.img .th{width:84px;height:84px;border-radius:12px;background:var(--soft) center/cover no-repeat;flex:none;border:1px solid var(--line)}
+.img .th.empty{display:grid;place-items:center;color:var(--mut);font-size:12px}
+.posters{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.pc .th{aspect-ratio:1/1;background:var(--soft) center/cover no-repeat}
+.pc .row{display:flex;justify-content:space-between;padding:4px}
 .foot{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px}
 .foot .in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center}
 .foot .in .btn{flex:1}
-#out{display:none}#out.on{display:block}
-#code{font:13px/1.4 ui-monospace,monospace;direction:ltr;text-align:left;min-height:220px}
-ol{padding-inline-start:20px;margin:6px 0}
+.status{font-size:13px;color:var(--mut);flex:none}
+.center{min-height:60vh;display:grid;place-items:center;text-align:center}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:700;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
 :focus-visible{outline:2px solid var(--o);outline-offset:1px}
 </style>
 </head>
 <body>
-<header><img src="logo-white.png" alt="ع الفرازة"><p>صفحة التعديل: غيّر الأسعار وضيف العروض، وبعدين اضغط "طلّع ملف البيانات".</p></header>
-<main id="app"></main>
-<div class="foot"><div class="in"><button class="btn o" id="gen">طلّع ملف البيانات (data.js)</button></div></div>
+<header><img src="logo-white.png" alt="ع الفرازة"><div class="who" id="who"></div></header>
+<main id="app"><div class="center">بيحمّل…</div></main>
+<div class="foot" id="foot" hidden><div class="in"><span class="status" id="st"></span><button class="btn o" id="save">احفظ وانشر على الموقع</button></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="picker" accept="image/*" hidden>
 <script src="data.js"></script>
-<script>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
+import {getFirestore,doc,getDoc,setDoc,deleteDoc} from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+import {FIREBASE_CONFIG} from './fbconfig.js';
 {
-const D=JSON.parse(JSON.stringify(window.FARAZA||{}));
-['specials','offers','products','delivery','reviews','brands'].forEach(k=>D[k]=D[k]||[]);
+const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
+const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=t=>{const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2200)};
+let D=null,dirty=false,IMG={};
+const LISTS=['heroPosters','specials','offers','products','delivery','reviews','brands'];
 const SCH={
-  specials:{title:'عروض خاصة',hint:'بتظهر في قسم لوحده فوق العروض، وبتختفي لوحدها بعد تاريخ النهاية.',add:'+ عرض خاص',f:[['name','اسم العرض'],['price','السعر','n'],['oldPrice','السعر قبل العرض (اختياري)','n'],['ends','آخر يوم للعرض','d'],['items','محتوى العرض (كل صنف في سطر)','l']]},
+  specials:{title:'عروض خاصة',hint:'بتظهر في قسم لوحده فوق العروض، وبتختفي لوحدها بعد آخر يوم.',add:'+ عرض خاص',f:[['name','اسم العرض'],['price','السعر','n'],['oldPrice','السعر قبل العرض (اختياري)','n'],['ends','آخر يوم للعرض','d'],['items','محتوى العرض (كل صنف في سطر)','l']]},
   offers:{title:'العروض الأساسية',hint:'العروض اللي شغالة على طول.',add:'+ عرض',f:[['name','اسم العرض'],['price','السعر','n'],['tag','كلمة فوق الكارت (اختياري)'],['items','محتوى العرض (كل صنف في سطر)','l']]},
-  products:{title:'المنيو',hint:'الأصناف وأسعارها.',add:'+ صنف',f:[['name','الصنف'],['sub','الوصف (مسلوق، متقطع…)'],['unit','الوحدة (كيلو، 500 جرام…)'],['price','السعر','n']]},
+  products:{title:'المنيو والصور',hint:'الأصناف وأسعارها. الصورة بتظهر في قسم "على الطبيعة".',add:'+ صنف',f:[['photo','صورة المنتج','img'],['name','الصنف'],['sub','الوصف (مسلوق، متقطع…)'],['unit','الوحدة (كيلو، 500 جرام، 3 حزم…)'],['price','السعر','n']]},
   delivery:{title:'أسعار التوصيل',hint:'المنطقة وسعر التوصيل ليها.',add:'+ منطقة',f:[['place','المنطقة'],['price','السعر','n']]},
   reviews:{title:'كلام العملاء',hint:'رسايل العملاء اللي بتظهر في الموقع (من غير أسماء).',add:'+ رسالة',f:[['tag','كلمة صغيرة (نضافة، طزاجة…)'],['text','الرسالة','t']]},
-  brands:{title:'براندات مختارة',hint:'لو القائمة فاضية الموقع بيكتب "قريبًا".',add:'+ براند',f:[['name','اسم البراند'],['product','المنتج'],['unit','الوحدة'],['price','السعر (اختياري)','n'],['note','ليه اخترناه','t']]}
+  brands:{title:'براندات مختارة',hint:'لو القائمة فاضية الموقع بيكتب "قريبًا".',add:'+ براند',f:[['photo','الصورة (اختياري)','img'],['name','اسم البراند'],['product','المنتج'],['unit','الوحدة'],['price','السعر (اختياري)','n'],['note','ليه اخترناه','t']]}
 };
+const src=v=>!v?'':v.startsWith('fs:')?(IMG[v.slice(3)]||''):v;
+const mark=()=>{dirty=true;$('#st').textContent='فيه تعديلات ما اتحفظتش'};
+
+/* image upload: resize & compress to fit Firestore */
+function compress(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+  let w=im.width,h=im.height,M=1000;if(w>M||h>M){const k=M/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k)}
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);
+  let q=.82,out=c.toDataURL('image/jpeg',q);while(out.length>700000&&q>.4){q-=.1;out=c.toDataURL('image/jpeg',q)}res(out)};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(file)})}
+let pickCb=null;$('#picker').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f||!pickCb)return;const cb=pickCb;pickCb=null;
+  try{toast('بيرفع الصورة…');const data=await compress(f),id='i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    await setDoc(doc(db,'siteImages',id),{data,at:Date.now()});IMG[id]=data;cb('fs:'+id);toast('الصورة اترفعت ✓ متنساش تحفظ')}catch(err){console.error(err);toast('الصورة ماترفعتش، جرب تاني')}};
+const pick=cb=>{pickCb=cb;$('#picker').click()};
+
+function imgField(k,i,f,l){const v=D[k][i][f];return `<div class="full img"><div class="th ${src(v)?'':'empty'}" style="${src(v)?`background-image:url('${src(v)}')`:''}">${src(v)?'':'مفيش صورة'}</div>
+  <div><span style="display:block;font-size:13px;color:var(--mut);font-weight:600">${l}</span><button class="btn" data-pimg="${k}:${i}:${f}">${src(v)?'غيّر الصورة':'+ ضيف صورة'}</button>${v?` <button class="btn del" data-rimg="${k}:${i}:${f}">شيل</button>`:''}</div></div>`}
 function field(k,i,[f,l,t]){const v=D[k][i][f];
+  if(t==='img')return imgField(k,i,f,l);
   if(t==='l')return `<label class="full"><span>${l}</span><textarea data-k="${k}" data-i="${i}" data-f="${f}" data-t="l">${esc((v||[]).join('\n'))}</textarea></label>`;
   if(t==='t')return `<label class="full"><span>${l}</span><textarea data-k="${k}" data-i="${i}" data-f="${f}">${esc(v)}</textarea></label>`;
   return `<label><span>${l}</span><input data-k="${k}" data-i="${i}" data-f="${f}" data-t="${t||''}" ${t==='n'?'type="number" inputmode="decimal"':t==='d'?'type="date"':''} value="${esc(v??'')}"></label>`}
 function draw(){
-  document.getElementById('app').innerHTML=`<h2>بيانات عامة</h2><div class="card grid">
+  $('#app').innerHTML=`<h2>صور العروض اللي فوق</h2><p class="hint">بتتقلب لوحدها كل كام ثانية في أول الموقع. الأحسن تكون مربعة.</p>
+  <div class="posters">${D.heroPosters.map((p,i)=>`<div class="pc"><div class="th" style="background-image:url('${src(p)}')"></div><div class="row">${i?`<button class="btn" data-pup="${i}" aria-label="قدّم">→</button>`:'<span></span>'}<button class="btn del" data-pdel="${i}">شيل</button></div></div>`).join('')}
+    <button class="pc btn" data-padd style="aspect-ratio:1/1;min-height:150px">+ ضيف صورة عرض</button></div>
+  <h2>بيانات عامة</h2><div class="card grid">
     <label><span>رقم الواتساب (دولي، من غير +)</span><input data-g="whatsapp" value="${esc(D.whatsapp)}" inputmode="tel"></label>
     <label><span>رقم الموبايل</span><input data-g="phone" value="${esc(D.phone)}" inputmode="tel"></label>
     <label><span>المنطقة</span><input data-g="area" value="${esc(D.area)}"></label>
-    <label class="full"><span>عنوان مكان التجهيز</span><input data-g="address" value="${esc(D.address)}"></label>
-    <label><span>لينك اللوكيشن (Google Maps)</span><input data-g="mapUrl" value="${esc(D.mapUrl)}" dir="ltr"></label>
-    <label><span>لينك فيسبوك</span><input data-g="facebook" value="${esc(D.facebook)}" dir="ltr"></label>
     <label><span>عدد العملاء (بيظهر +)</span><input data-g="customers" value="${esc(D.customers)}" inputmode="numeric"></label>
+    <label class="full"><span>عنوان مكان التجهيز</span><input data-g="address" value="${esc(D.address)}"></label>
+    <label class="full"><span>لينك اللوكيشن (Google Maps)</span><input data-g="mapUrl" value="${esc(D.mapUrl)}" dir="ltr"></label>
+    <label><span>لينك فيسبوك</span><input data-g="facebook" value="${esc(D.facebook)}" dir="ltr"></label>
     <label><span>لينك تيك توك</span><input data-g="tiktok" value="${esc(D.tiktok)}" dir="ltr"></label></div>`+
   Object.entries(SCH).map(([k,s])=>`<h2>${s.title}</h2><p class="hint">${s.hint}</p>`+D[k].map((it,i)=>`<div class="card"><div class="top"><b>${esc(it.name||it.tag||it.place||'جديد')}</b><span>
     ${i>0?`<button class="btn" data-up="${k}" data-i="${i}" aria-label="لفوق">↑</button>`:''}<button class="btn del" data-del="${k}" data-i="${i}">مسح</button></span></div>
     <div class="grid">${s.f.map(f=>field(k,i,f)).join('')}</div></div>`).join('')+`<button class="btn" data-add="${k}">${s.add}</button>`).join('')+
-  `<div id="out" class="card" style="margin-top:20px"><h2 style="margin-top:0">ملف البيانات جاهز</h2>
-    <ol class="hint"><li>اضغط "انسخ".</li><li>افتح ملف <b>data.js</b> على GitHub واضغط علامة القلم ✏️.</li><li>امسح كل اللي فيه، والصق الجديد، واضغط <b>Commit changes</b>.</li><li>الموقع بيتحدث خلال دقيقة أو اتنين.</li></ol>
-    <textarea id="code" readonly></textarea><button class="btn o" id="copy" style="margin-top:8px;width:100%">انسخ</button></div>`}
-document.addEventListener('input',e=>{const t=e.target;
-  if(t.dataset.g){D[t.dataset.g]=t.value;return}
+  `<p class="hint" style="margin-top:24px">التعديلات بتظهر على الموقع أول ما تضغط "احفظ وانشر". لو الموقع مفتوح عند حد، هيشوفها لما يعمل refresh.</p>`}
+
+document.addEventListener('input',e=>{const t=e.target;if(!D)return;
+  if(t.dataset.g){D[t.dataset.g]=t.value;mark();return}
   const {k,i,f,t:ty}=t.dataset;if(!k)return;
-  D[k][i][f]=ty==='l'?t.value.split('\n').map(x=>x.trim()).filter(Boolean):ty==='n'?(t.value===''?undefined:Number(t.value)):t.value;
-  if(f==='name')t.closest('.card').querySelector('.top b').textContent=t.value||'جديد'});
-document.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.add){const k=b.dataset.add;D[k].push(k==='specials'?{id:'s'+Date.now(),name:'',items:[],price:undefined,ends:''}:k==='offers'?{id:'o'+Date.now(),name:'',items:[],price:undefined}:k==='products'?{id:'p'+Date.now(),name:'',sub:'',unit:'كيلو',price:undefined}:k==='reviews'?{tag:'',text:''}:k==='delivery'?{place:'',price:undefined}:{name:'',product:'',note:''});draw()}
-  else if(b.dataset.del){if(b.dataset.armed){D[b.dataset.del].splice(+b.dataset.i,1);draw()}else{b.dataset.armed=1;b.textContent='متأكد؟';setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent='مسح'}},3000)}}
-  else if(b.dataset.up){const a=D[b.dataset.up],i=+b.dataset.i;[a[i-1],a[i]]=[a[i],a[i-1]];draw()}
-  else if(b.id==='gen'){const d=new Date();D.updated=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const clean=k=>D[k].filter(x=>String(x.name||x.text||x.place||'').trim());
-    const out={...D,specials:clean('specials'),offers:clean('offers'),products:clean('products'),reviews:clean('reviews'),delivery:clean('delivery'),brands:clean('brands')};
-    document.getElementById('out').classList.add('on');document.getElementById('code').value='// بيانات موقع ع الفرازة — اتعملت من صفحة التعديل\nwindow.FARAZA = '+JSON.stringify(out,null,2)+';\n';
-    document.getElementById('out').scrollIntoView({behavior:'smooth'})}
-  else if(b.id==='copy'){const c=document.getElementById('code');try{await navigator.clipboard.writeText(c.value);b.textContent='اتنسخ ✓'}catch(_){c.select();b.textContent='اختار الكل وانسخ يدوي'}setTimeout(()=>b.textContent='انسخ',2500)}});
-draw();
+  D[k][i][f]=ty==='l'?t.value.split('\n').map(x=>x.trim()).filter(Boolean):ty==='n'?(t.value===''?null:Number(t.value)):t.value;mark();
+  if(['name','tag','place'].includes(f))t.closest('.card').querySelector('.top b').textContent=t.value||'جديد'});
+document.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if('login' in d){const pv=new GoogleAuthProvider();pv.setCustomParameters({prompt:'select_account'});try{await signInWithPopup(auth,pv)}catch(err){if(err.code==='auth/popup-blocked')signInWithRedirect(auth,pv)}return}
+  if('logout' in d)return signOut(auth);
+  if(!D)return;
+  if('padd' in d)return pick(v=>{D.heroPosters.push(v);mark();draw()});
+  if(d.pdel){D.heroPosters.splice(+d.pdel,1);mark();draw();return}
+  if(d.pup){const i=+d.pup,a=D.heroPosters;[a[i-1],a[i]]=[a[i],a[i-1]];mark();draw();return}
+  if(d.pimg){const [k,i,f]=d.pimg.split(':');return pick(v=>{D[k][i][f]=v;mark();draw()})}
+  if(d.rimg){const [k,i,f]=d.rimg.split(':');D[k][i][f]='';mark();draw();return}
+  if(d.add){const k=d.add,id=k[0]+Date.now().toString(36);D[k].push(k==='specials'?{id,name:'',items:[],price:null,ends:''}:k==='offers'?{id,name:'',items:[],price:null}:k==='products'?{id,name:'',sub:'',unit:'',price:null,photo:''}:k==='reviews'?{tag:'',text:''}:k==='delivery'?{place:'',price:null}:{name:'',product:'',note:''});mark();draw();return}
+  if(d.del){if(b.dataset.armed){D[d.del].splice(+d.i,1);mark();draw()}else{b.dataset.armed=1;b.textContent='متأكد؟';setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent='مسح'}},3000)}return}
+  if(d.up){const a=D[d.up],i=+d.i;[a[i-1],a[i]]=[a[i],a[i-1]];mark();draw();return}
+  if(b.id==='save'){b.disabled=true;
+    const clean=k=>D[k].filter(x=>typeof x==='string'?x:String(x.name||x.text||x.place||'').trim());
+    const t=new Date(),out={...D,updated:`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`};LISTS.forEach(k=>out[k]=clean(k));
+    try{await setDoc(doc(db,'site','main'),JSON.parse(JSON.stringify(out)));dirty=false;$('#st').textContent='اتنشر ✓';toast('اتحفظ واتنشر على الموقع ✓')}catch(err){console.error(err);toast(err.code==='permission-denied'?'الحساب ده مش مسموحله يعدّل':'ماتحفظش، جرب تاني')}
+    b.disabled=false}});
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+
+getRedirectResult(auth).catch(()=>{});
+onAuthStateChanged(auth,async u=>{
+  if(!u){$('#foot').hidden=true;$('#who').textContent='';$('#app').innerHTML=`<div class="center"><div class="card" style="max-width:420px;padding:28px"><h2 style="margin-top:0">تعديل الموقع</h2><p class="hint">ادخل بحساب جوجل بتاع صاحب الدفتر.</p><button class="btn w" data-login>ادخل بحساب جوجل</button></div></div>`;return}
+  $('#who').innerHTML=`${esc(u.email)} · <button class="btn" data-logout style="min-height:32px;padding:2px 10px;font-size:13px">خروج</button>`;
+  try{const s=await getDoc(doc(db,'site','main'));const base=JSON.parse(JSON.stringify(window.FARAZA||{}));D=s.exists()?{...base,...s.data()}:base}
+  catch(err){$('#app').innerHTML=`<div class="center"><div class="card"><p>الحساب ده مش مسموحله يعدّل الموقع.</p><button class="btn" data-logout>اخرج</button></div></div>`;return}
+  LISTS.forEach(k=>D[k]=D[k]||[]);if(!D.heroPosters.length)D.heroPosters=['offer.jpg'];
+  const refs=new Set();JSON.stringify(D).replace(/"fs:([\w-]+)"/g,(_,id)=>refs.add(id));
+  await Promise.all([...refs].map(async id=>{try{const x=await getDoc(doc(db,'siteImages',id));if(x.exists())IMG[id]=x.data().data}catch(_){}}));
+  $('#foot').hidden=false;$('#st').textContent='';draw()});
 }
 </script>
 </body>
