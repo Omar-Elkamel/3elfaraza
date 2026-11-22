@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ع الفرازة | تجهيزات مطبخك طازة</title>
+<meta name="description" content="ع الفرازة — خضار متجهز طازة ومختار بعناية في دمياط: كرنب مسلوق، ورق عنب، طماطم معصورة، ملوخية وأكتر. اطلب على واتساب والتوصيل لحد باب البيت.">
+<meta property="og:title" content="ع الفرازة | تجهيزات مطبخك طازة">
+<meta property="og:description" content="خضار متجهز طازة ومختار بعناية، وتوصيل لحد باب البيت.">
+<meta property="og:image" content="offer.jpg">
+<meta name="theme-color" content="#1f523e">
+<link rel="icon" href="logo.png">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm neighbourhood shop that takes itself seriously as a brand
+   IDEA: the green-and-orange price board from ع الفرازة's own posts, turned into a shop window
+   PICTURE: the brand's own offer poster tilted on the green hero band, with leaves drawn like the logo
+   COLOUR and TYPE: logo green #1f523e, leaf #769e64, orange #f47b20 on cream #f7f2e6; Baloo Bhaijaan 2 + Cairo
+   LAYOUT: green hero, cream sections, cards that add straight to a WhatsApp order bar */
+:root{color-scheme:light dark;
+--bg:light-dark(#f7f2e6,#0f1813);--card:light-dark(#fffdf8,#17231b);--ink:light-dark(#1b2a21,#eef3ec);--mut:light-dark(#5f6f64,#a3b3a8);
+--line:light-dark(#e7dfcc,#27362c);--g:#1f523e;--leaf:#769e64;--g2:light-dark(#1f523e,#9bd07f);--o:#f47b20;--o2:light-dark(#b9520a,#ffa25a);
+--soft:light-dark(#edf2e6,#1b2a21);--osoft:light-dark(#fff0e2,#2c1f14);--disp:"Baloo Bhaijaan 2",Cairo,sans-serif}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Cairo,system-ui,sans-serif;overflow-x:clip;padding-bottom:90px}
+a{color:inherit}img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:max(5vw,16px)}
+.band{padding:clamp(40px,6vw,80px) 0}
+h1,h2,h3{font-family:var(--disp);line-height:1.15;margin:0;text-wrap:balance;font-weight:800}
+h2{font-size:clamp(30px,5vw,44px);color:var(--g2)}
+.lead{color:var(--mut);max-width:60ch;margin:8px 0 0}
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:var(--g);color:#fff}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px}
+.nav img{height:38px;width:auto}
+.links{display:flex;gap:4px;overflow-x:auto}
+.links a{text-decoration:none;font-weight:700;font-size:15px;padding:8px 12px;border-radius:10px;white-space:nowrap}
+.links a:hover{background:rgba(255,255,255,.12)}
+/* hero */
+.hero{background:var(--g);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(32px,5vw,72px) clamp(48px,6vw,90px)}
+.hero h1{font-size:clamp(40px,6.4vw,70px);color:#fff}
+.hero h1 em{font-style:normal;color:var(--o)}
+.hero p{font-size:19px;opacity:.92;max-width:44ch;margin:16px 0 26px}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:10px 22px;min-height:50px;font:800 17px Cairo,sans-serif;cursor:pointer;text-decoration:none;background:var(--o);color:#fff}
+.btn.line{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
+.btn.g{background:var(--g);color:#fff}
+.btn svg{width:22px;height:22px}
+.facts{display:flex;gap:22px;flex-wrap:wrap;margin-top:28px;font-size:15px}
+.facts b{display:block;font-family:var(--disp);font-size:26px;color:#fff;line-height:1.1}
+.facts span{opacity:.8}
+.art{position:relative;aspect-ratio:1/1;max-width:480px;justify-self:center;width:100%}
+.art .poster{position:absolute;inset:8% 6% 6% 8%;border-radius:26px;overflow:hidden;transform:rotate(-4deg);box-shadow:0 30px 60px rgba(0,0,0,.35);border:6px solid #fff}
+.art .poster img{width:100%;height:100%;object-fit:cover}
+.art .leafs{position:absolute;inset:0;pointer-events:none}
+.art .stamp{position:absolute;bottom:2%;right:0;background:var(--o);color:#fff;font-family:var(--disp);font-weight:800;border-radius:50%;width:118px;height:118px;display:grid;place-items:center;text-align:center;line-height:1.1;font-size:19px;transform:rotate(8deg);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.wave{position:absolute;bottom:-1px;left:0;width:100%;height:40px;color:var(--bg)}
+/* promises */
+.promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-10px}
+.pr{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.pr i{flex:none;width:52px;height:52px;border-radius:16px;background:var(--soft);display:grid;place-items:center;color:var(--g2)}
+.pr i svg{width:28px;height:28px}
+.pr b{font-family:var(--disp);font-size:20px;display:block;line-height:1.2}
+.pr span{color:var(--mut);font-size:15px}
+/* offers */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.offers{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.of{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:10px;position:relative}
+.of.hot{border-color:var(--o)}
+.of.sp{border-color:var(--o);background:var(--osoft)}
+.old{font-size:18px;color:var(--mut);text-decoration:line-through;font-family:var(--disp);margin-inline-start:6px}
+.ends{font-size:14px;font-weight:700;color:var(--o2)}
+.of .tag{position:absolute;top:-13px;right:18px;background:var(--o);color:#fff;font-size:13px;font-weight:800;padding:2px 12px;border-radius:99px}
+.of h3{font-size:24px}
+.of ul{margin:0;padding:0;list-style:none;flex:1}
+.of li{padding:4px 0;display:flex;gap:8px;align-items:baseline}
+.of li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--leaf);transform:translateY(-2px)}
+.price{font-family:var(--disp);font-weight:800;font-size:38px;color:var(--o2);line-height:1;white-space:nowrap}
+.price small{font-size:16px;color:var(--mut);font-family:Cairo,sans-serif;font-weight:700}
+.of .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* qty control */
+.add{border:0;background:var(--g);color:#fff;font:800 16px Cairo,sans-serif;border-radius:12px;min-height:46px;padding:6px 18px;cursor:pointer;white-space:nowrap}
+.qty{display:flex;align-items:center;gap:4px;background:var(--soft);border-radius:12px;padding:3px}
+.qty button{width:42px;height:40px;border:0;border-radius:9px;background:var(--card);color:var(--g2);font:800 22px Cairo,sans-serif;cursor:pointer;line-height:1}
+.qty span{min-width:34px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+/* menu */
+.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px 22px}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--line)}
+.it b{font-family:var(--disp);font-size:21px;line-height:1.2}
+.it .s{color:var(--mut);font-size:14px}
+.it .p{font-family:var(--disp);font-weight:800;font-size:24px;color:var(--o2);text-align:left;white-space:nowrap;line-height:1.1}
+.it .p small{display:block;font:600 12px Cairo,sans-serif;color:var(--mut)}
+.upd{display:inline-block;background:var(--osoft);color:var(--o2);border-radius:99px;padding:4px 14px;font-weight:700;font-size:14px}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:s}
+.st{background:var(--g);color:#fff;border-radius:22px;padding:24px;position:relative;overflow:hidden}
+.st::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:-8px;font-family:var(--disp);font-size:110px;font-weight:800;color:rgba(255,255,255,.1);line-height:1}
+.st b{font-family:var(--disp);font-size:22px;display:block}
+.st span{opacity:.88;font-size:15px}
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,64px);align-items:center}
+.mark{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(28px,5vw,48px);display:grid;place-items:center;gap:14px;text-align:center}
+.mark img{width:min(100%,320px)}
+.mark p{margin:0;font-family:var(--disp);font-size:22px;color:var(--o2);font-weight:700}
+.about p{margin:0 0 14px}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.vals span{background:var(--soft);color:var(--g2);font-weight:700;border-radius:99px;padding:6px 14px;font-size:15px}
+/* brands */
+.brands{background:var(--osoft);border-radius:28px;padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.brands h2{color:var(--o2)}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px;grid-column:1/-1}
+.soon{font-family:var(--disp);font-weight:800;font-size:22px;background:var(--o);color:#fff;border-radius:18px;padding:14px 24px;transform:rotate(-3deg);white-space:nowrap}
+/* footer */
+footer{background:var(--g);color:#fff;margin-top:clamp(40px,6vw,80px)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-block:36px}
+footer img{height:54px;width:auto}
+.soc{display:flex;gap:10px;flex-wrap:wrap}
+.soc a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;background:rgba(255,255,255,.12);border-radius:12px;padding:10px 16px;min-height:46px}
+.soc svg{width:20px;height:20px}
+footer small{display:block;opacity:.75;margin-top:6px}
+/* cart bar */
+.bar{position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(0,0,0,.12);transform:translateY(110%);transition:transform .25s}
+.bar.on{transform:none}
+.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:12px}
+.bar .sum{flex:1}
+.bar .sum b{font-family:var(--disp);font-size:24px;color:var(--o2);white-space:nowrap}
+.bar .sum span{display:block;font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .clear{border:0;background:none;color:var(--mut);font:700 14px Cairo,sans-serif;cursor:pointer;min-height:44px;padding:0 6px}
+.wa{background:#1fa855}
+.note{font-size:14px;color:var(--mut)}
+:focus-visible{outline:3px solid var(--o);outline-offset:2px}
+
+/* ---------- motion ---------- */
+.js [data-r]{opacity:0;translate:0 40px;filter:blur(8px);transition:opacity 1s var(--ease),translate 1.1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
+.js [data-r].in{opacity:1;translate:0 0;filter:none}
+:root{--ease:cubic-bezier(.16,1,.3,1)}
+/* intro curtain */
+#intro{position:fixed;inset:0;z-index:100;background:var(--g);display:grid;place-items:center;transition:clip-path 1s var(--ease) .1s}
+#intro img{width:min(56vw,300px);opacity:0;transform:scale(.86);animation:logoin .9s var(--ease) .1s forwards}
+#intro::after{content:"";position:absolute;bottom:22%;left:50%;width:120px;height:3px;margin-left:-60px;background:rgba(255,255,255,.18);border-radius:3px}
+#intro i{position:absolute;bottom:22%;left:50%;width:120px;height:3px;margin-left:-60px;background:var(--o);border-radius:3px;transform-origin:right;transform:scaleX(0);animation:load 1s var(--ease) .2s forwards;z-index:1}
+#intro.out{clip-path:inset(0 0 100% 0)}
+@keyframes logoin{to{opacity:1;transform:none}}@keyframes load{to{transform:scaleX(1)}}
+.prog{position:fixed;top:0;inset-inline:0;height:3px;background:var(--o);transform-origin:right;transform:scaleX(0);z-index:40}
+/* hero line masks */
+.ln{display:block;overflow:hidden;padding-bottom:.08em}.ln>span{display:block;transform:translateY(110%);transition:transform 1.2s var(--ease)}
+.go .ln>span{transform:none}.go .ln:nth-child(2)>span{transition-delay:.12s}
+.hero .rest{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.go .rest{opacity:1;transform:none}.go .rest.r2{transition-delay:.15s}.go .rest.r3{transition-delay:.3s}
+/* where */
+.where{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;margin-top:16px}
+.wc{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px}
+.wc h3{font-size:24px;color:var(--g2);margin-bottom:10px}
+.dl{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-weight:700}
+.dl:last-child{border:0}.dl b{font-family:var(--disp);font-size:24px;color:var(--o2);white-space:nowrap}
+.addr{font-weight:700;font-size:17px;margin:0 0 14px;padding-inline-start:14px;border-inline-start:4px solid var(--o)}
+@media(max-width:860px){.where{grid-template-columns:minmax(0,1fr)}}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ph{margin:0;position:relative;border-radius:22px;overflow:hidden;background:var(--soft);aspect-ratio:3/4;cursor:zoom-in;isolation:isolate}
+.ph.wide{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.18);transition:transform 1.6s var(--ease)}
+.js .ph{clip-path:inset(12% 12% 12% 12% round 22px);transition:clip-path 1.3s var(--ease);transition-delay:var(--d,0s)}
+.js .ph.in{clip-path:inset(0 0 0 0 round 22px)}.ph.in img{transform:scale(1)}
+.ph:hover img{transform:scale(1.06)}
+.ph figcaption{position:absolute;inset:auto 0 0 0;padding:40px 14px 12px;background:linear-gradient(transparent,rgba(10,30,20,.85));color:#fff;display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
+.ph figcaption b{font-family:var(--disp);font-size:20px;line-height:1.15;display:block}
+.ph figcaption small{opacity:.85;font-size:13px}
+.ph .pp{font-family:var(--disp);font-weight:800;font-size:22px;color:#fff;background:var(--o);border-radius:12px;padding:2px 10px;white-space:nowrap}
+.ph.wide figcaption b{font-size:28px}
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:60;background:rgba(8,20,14,.9);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+#lb.on{opacity:1;pointer-events:auto}
+#lb figure{margin:0;max-width:min(92vw,560px);transform:scale(.92) translateY(20px);transition:transform .6s var(--ease)}
+#lb.on figure{transform:none}
+#lb img{width:100%;max-height:72vh;object-fit:contain;border-radius:18px}
+#lb figcaption{color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
+#lb figcaption b{font-family:var(--disp);font-size:24px}
+#lb .x{position:absolute;top:16px;left:16px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:26px;cursor:pointer}
+@media(max-width:860px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}.ph.wide{grid-column:1/-1;grid-row:auto;aspect-ratio:1/1}}
+.nav{transition:box-shadow .3s}.nav.sc{box-shadow:0 8px 24px rgba(0,0,0,.22)}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}}
+@keyframes drop{from{opacity:0;transform:translateY(-40px) rotate(-16deg) scale(.88)}}
+@keyframes floaty{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(-2deg) translateY(-12px)}}
+@keyframes spin{from{opacity:0;transform:rotate(-200deg) scale(.2)}}
+@keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(9deg)}}
+@keyframes pop{40%{transform:scale(1.3)}}
+@keyframes mq{to{transform:translateX(50%)}}
+.art .poster{opacity:0}.go .art .poster{animation:drop 1.3s .2s var(--ease) both,floaty 8s 1.6s ease-in-out infinite;opacity:1}
+.art{will-change:transform}
+.art .stamp{opacity:0}.go .art .stamp{opacity:1;animation:spin 1.1s .7s var(--ease) both}
+.leafs path{transform-box:fill-box;transform-origin:0 100%;animation:sway 5s ease-in-out infinite}
+.leafs path:nth-child(n+3){animation-duration:6.5s;animation-delay:-2s;transform-origin:100% 50%}
+.btn,.add,.qty button{transition:transform .2s,box-shadow .25s,filter .2s}
+.btn:hover,.add:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.18)}
+.btn:active,.add:active,.qty button:active{transform:scale(.94)}
+.of,.pr,.st,.mark{transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .3s}
+.of:hover,.pr:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(31,82,62,.16)}
+.st:hover{transform:translateY(-6px) rotate(-1deg)}
+.it{transition:background .25s}.it:hover{background:var(--soft)}
+.pop{animation:pop .35s ease}
+.links a{position:relative}.links a::after{content:"";position:absolute;inset-inline:12px;bottom:4px;height:2px;background:var(--o);transform:scaleX(0);transition:transform .3s}.links a:hover::after{transform:scaleX(1)}
+/* reviews */
+.revband{background:var(--g);color:#fff;overflow:hidden}
+.revband h2{color:#fff}.revband .lead{color:rgba(255,255,255,.82)}
+.big1000{font-family:var(--disp);font-weight:800;font-size:clamp(64px,12vw,120px);line-height:.9;color:var(--o)}
+.revs{display:grid;gap:16px;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.track{display:flex;width:max-content;animation:mq 70s linear infinite}
+.track.b{animation-duration:85s;animation-direction:reverse}
+.revs:hover .track{animation-play-state:paused}
+.bub{flex:none;width:310px;margin-inline-end:16px;background:#fff;color:#1b2a21;border-radius:18px 18px 18px 4px;padding:16px 18px 12px;box-shadow:0 10px 24px rgba(0,0,0,.18);position:relative;display:flex;flex-direction:column;gap:8px}
+.bub .stars{color:#f5b400;letter-spacing:2px;font-size:15px}
+.bub p{margin:0;font-size:16px;line-height:1.6;flex:1}
+.bub .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#6b7a70}
+.bub .tg{background:#edf2e6;color:#1f523e;font-weight:800;border-radius:99px;padding:1px 10px;font-size:12px}
+.bub .tk{color:#34b7f1;font-weight:800}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.js [data-r]{opacity:1;translate:none;filter:none}.ln>span,.hero .rest,.art .poster,.art .stamp{opacity:1;transform:none}.js .ph{clip-path:none}.ph img{transform:none}#intro{display:none}.track{width:auto;flex-wrap:wrap;gap:12px}.track [aria-hidden]{display:none}.track.b{display:none}.bub{margin:0}}
+@media(max-width:860px){.hero .wrap,.about,.brands{grid-template-columns:minmax(0,1fr)}.art{max-width:380px}.promise,.steps{grid-template-columns:minmax(0,1fr)}.menu{grid-template-columns:minmax(0,1fr)}.links{display:none}.soon{justify-self:start}}
+@media(max-width:420px){.hero h1{font-size:38px}.art .stamp{width:96px;height:96px;font-size:16px}.it{grid-template-columns:minmax(0,1fr) auto;}.it .qtyc{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div id="intro" aria-hidden="true"><img src="logo-white.png" alt=""><i></i></div>
+<div class="prog" id="prog"></div>
+<nav class="nav"><div class="wrap">
+  <a href="#top" aria-label="ع الفرازة"><img src="logo-white.png" alt="ع الفرازة"></a>
+  <div class="links"><a href="#specials" id="spLink" hidden>عروض خاصة</a><a href="#offers">العروض</a><a href="#real">على الطبيعة</a><a href="#menu">الأسعار</a><a href="#how">إزاي تطلب</a><a href="#reviews">آراء العملاء</a><a href="#about">عن الفرازة</a><a href="#brands">براندات مختارة</a></div>
+  <a class="btn" id="navWa" href="#" style="min-height:42px;padding:6px 16px;font-size:15px">اطلب دلوقتي</a>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1><span class="ln"><span>مطبخك جاهز</span></span><span class="ln"><span>من غير <em>تعب</em></span></span></h1>
+      <p class="rest">تجهيزات مطبخك طازة ومختارة بعناية: كرنب مسلوق، ورق عنب، ملوخية، طماطم معصورة وأكتر. بتوصلك نضيفة ومتغلفة لحد باب البيت، وانت عليك الطبخ بس.</p>
+      <div class="cta rest r2"><a class="btn" href="#offers">شوف العروض</a><a class="btn line" id="heroWa" href="#">اطلب على واتساب</a></div>
+      <div class="facts rest r3"><div><b><span data-count="1000">1000</span>+</b><span>عميل وثقوا فينا</span></div><div><b id="fCount" data-count="13">13</b><span>صنف جاهز للطبخ</span></div><div><b>لحد البيت</b><span>توصيل في <span class="area">دمياط</span></span></div></div>
+    </div>
+    <div class="art">
+      <svg class="leafs" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M84 4c-10 2-17 9-16 20 9-1 16-9 16-20z" fill="#769e64"/><path d="M70 22c3-6 7-11 12-15" stroke="#1f523e" stroke-width=".8" fill="none"/>
+        <path d="M2 70c9-4 18-2 22 7-8 4-18 3-22-7z" fill="#769e64"/><path d="M5 71c6 1 12 3 17 6" stroke="#1f523e" stroke-width=".8" fill="none"/>
+      </svg>
+      <div class="poster"><img src="offer.jpg" alt="عرض مميز من ع الفرازة: 2 كيلو كرنب و1 كيلو ورق عنب ونص كيلو طماطم معصورة"></div>
+      <div class="stamp">صنع<br>بإيدينا</div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V18C200 0 400 0 600 16s400 18 600 0v24z" fill="currentColor"/></svg>
+</header>
+
+<section class="wrap" style="padding-top:20px">
+  <div class="promise">
+    <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.2-6"/></svg></i><div><b>مختار بعناية</b><span>بنختار الخضار بنفسنا، ومش أي حاجة بتدخل العلبة.</span></div></div>
+    <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></i><div><b>نضيف ومتغلف</b><span>كل صنف في علبته، متغلف كويس وجاهز للتلاجة أو للحلة.</span></div></div>
+    <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M6 14l3-7h5l2 4h3l2 3"/></svg></i><div><b>توصيل لحد البيت</b><span>اطلب على واتساب، والأوردر يوصلك وانت مكانك.</span></div></div>
+  </div>
+</section>
+
+<section class="band" id="specials" hidden><div class="wrap">
+  <div class="head"><div><h2 style="color:var(--o2)">عروض خاصة</h2><p class="lead">عروض لفترة محدودة، الحق قبل ما تخلص.</p></div></div>
+  <div class="offers" id="specialList"></div>
+</div></section>
+
+<section class="band" id="offers"><div class="wrap">
+  <div class="head"><div><h2>العروض</h2><p class="lead">العروض بتوفر عليك، واختار اللي يناسب بيتك. اضغط "ضيف" وكمّل الطلب على واتساب.</p></div></div>
+  <div class="offers" id="offerList"></div>
+</div></section>
+
+<section class="band" id="real" style="padding-top:0"><div class="wrap">
+  <div class="head"><div><h2>على الطبيعة</h2><p class="lead">صور حقيقية من شغلنا، من غير فلاتر. كده بالظبط بيوصلك الأوردر.</p></div></div>
+  <div class="gal" id="gal"></div>
+</div></section>
+
+<section class="band" id="menu" style="padding-top:0"><div class="wrap">
+  <div class="head"><div><h2>منيو التجهيزات</h2><p class="lead">الأسعار بالجنيه المصري على الوحدة المكتوبة جنب كل صنف.</p></div><span class="upd" id="upd"></span></div>
+  <div class="menu" id="menuList"></div>
+</div></section>
+
+<section class="band" id="how" style="padding-top:0"><div class="wrap">
+  <div class="head"><h2>إزاي تطلب؟</h2></div>
+  <div class="steps">
+    <div class="st"><b>اختار طلبك</b><span>ضيف العروض والأصناف اللي محتاجها من الصفحة دي.</span></div>
+    <div class="st"><b>ابعته على واتساب</b><span>الطلب بيتكتب لوحده، انت بس تضيف اسمك وعنوانك وتبعت.</span></div>
+    <div class="st"><b>يوصلك لحد البيت</b><span>بنأكد معاك الميعاد، أو تعدّي تستلم بنفسك من مكان التجهيز.</span></div>
+  </div>
+  <div class="where">
+    <div class="wc" data-r><h3>أسعار التوصيل</h3><div id="dlv"></div></div>
+    <div class="wc" data-r><h3>مكان التجهيز</h3><p style="margin:0 0 6px">إحنا شغالين <b>أونلاين</b> والتوصيل لحد باب البيت، وده مكان التجهيز لو حابب تستلم بنفسك:</p>
+      <p class="addr" id="addr"></p><a class="btn g" id="mapA" href="#" target="_blank" rel="noopener" style="min-height:44px;font-size:15px">افتح على الخريطة</a></div>
+  </div>
+</div></section>
+
+<section class="band revband" id="reviews"><div class="wrap">
+  <div class="head" style="align-items:center"><div><h2>كلامكم بيفرحنا</h2><p class="lead">رسايل حقيقية من عملائنا على واتساب بعد ما الأوردر وصلهم.</p></div>
+  <div style="text-align:left"><div class="big1000"><span data-count="1000" id="custN">1000</span>+</div><div style="opacity:.85;font-weight:700">عميل وثقوا في ع الفرازة</div></div></div>
+</div>
+<div class="revs" id="revs"></div>
+</section>
+
+<section class="band" id="about"><div class="wrap about">
+  <div class="mark"><img src="logo.png" alt="ع الفرازة"><p>خضار وفاكهة طازة.. كل يوم</p></div>
+  <div>
+    <h2>عن ع الفرازة</h2>
+    <p class="lead" style="margin-bottom:16px">اسمنا جاي من "الفرازة": إن كل حاجة بتتفرز وتتنقي قبل ما توصلك.</p>
+    <p>ع الفرازة بدأت في <span class="area">دمياط</span> بفكرة بسيطة: تجهيز الخضار بياخد من كل بيت وقت ومجهود كبير، من تنضيف وتقطيع وسلق وعصر. إحنا بناخد الحمل ده عنك.</p>
+    <p>بنختار الخضار بنفسنا، وبنجهزه ونغلفه في علب نضيفة، ويوصلك جاهز على الطبخ على طول. وبنتعامل مع ع الفرازة على إنها براند بيكبر، مش مجرد شغل وخلاص، عشان كده بنطور في المنتجات والتغليف كل فترة.</p>
+    <div class="vals"><span>جودة قبل أي حاجة</span><span>نضافة في كل خطوة</span><span>سعر عادل</span><span>نوصلك في ميعادك</span></div>
+  </div>
+</div></section>
+
+<section class="wrap" id="brands"><div class="brands">
+  <div>
+    <h2>براندات مختارة</h2>
+    <p class="lead" style="max-width:62ch">بندور على أحسن البراندات في الخامة والطعم، عشان نضيفها للمنيو جنب التجهيزات بتاعتنا. وأي براند هيوصلك من عندنا هنكون جربناه بنفسنا الأول.</p>
+  </div>
+  <div class="soon" id="soon">قريبًا</div>
+  <div class="bgrid" id="brandList" hidden></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div><img src="logo-white.png" alt="ع الفرازة"><small>تجهيزات مطبخك طازة ومختارة بعناية · أونلاين والتوصيل لحد البيت</small><small id="faddr"></small><small>واتساب: <span id="ph" dir="ltr"></span></small></div>
+  <div class="soc">
+    <a id="fWa" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>واتساب</a>
+    <a id="fFb" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-3 0-4 2-4 4.5V8H8v3.5h2V22h4V11.5h2.7L17 8z"/></svg>فيسبوك</a>
+    <a id="fTt" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.4 7.4 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg>تيك توك</a>
+  </div>
+</div></footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="صورة المنتج"><button class="x" aria-label="قفل">×</button><figure><img alt=""><figcaption><div><b></b><div class="note" style="color:#cfe0d4"></div></div><span></span></figcaption></figure></div>
+<div class="bar" id="bar"><div class="wrap">
+  <div class="sum"><b id="tot">0 جنيه</b><span id="lines"></span></div>
+  <button class="clear" id="clr">مسح</button>
+  <a class="btn wa" id="send" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>ابعت الطلب</a>
+</div></div>
+
+<script src="data.js"></script>
+<script>
+{
+const D=window.FARAZA||{offers:[],products:[],brands:[]};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US');
+const cart={}; // key -> qty
+const items={};
+const tday=new Date().toISOString().slice(0,10);
+const SP=(D.specials||[]).filter(s=>!s.ends||s.ends>=tday);
+SP.forEach(o=>items['s:'+o.id]={name:o.name,price:o.price,detail:(o.items||[]).join(' + ')});
+D.offers.forEach(o=>items['o:'+o.id]={name:o.name,price:o.price,detail:o.items.join(' + ')});
+D.products.forEach(p=>items['p:'+p.id]={name:p.name+(p.sub?' '+p.sub:''),price:p.price,detail:p.unit});
+(D.brands||[]).forEach((b,i)=>{if(b.price)items['b:'+i]={name:b.name+' — '+b.product,price:b.price,detail:b.unit||''}});
+
+const ctl=k=>cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
+
+function draw(){
+  if(SP.length){$('#specials').hidden=false;
+    $('#specialList').innerHTML=SP.map(o=>{const e=o.ends?o.ends.split('-'):null;return `<article class="of sp"><span class="tag">لفترة محدودة</span>
+    <h3>${esc(o.name)}</h3><ul>${(o.items||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${e?`<div class="ends">العرض لحد ${+e[2]}/${+e[1]}</div>`:''}
+    <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small>${o.oldPrice?`<span class="old">${fmt(o.oldPrice)}</span>`:''}</div><span id="c-s:${esc(o.id)}">${ctl('s:'+o.id)}</span></div></article>`}).join('')}
+  $('#offerList').innerHTML=D.offers.map(o=>`<article class="of${o.tag?' hot':''}">${o.tag?`<span class="tag">${esc(o.tag)}</span>`:''}
+    <h3>${esc(o.name)}</h3><ul>${o.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
+    <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small></div><span id="c-o:${esc(o.id)}">${ctl('o:'+o.id)}</span></div></article>`).join('');
+  $('#menuList').innerHTML=D.products.map(p=>`<div class="it"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
+    <div class="p">${fmt(p.price)}<small>${esc(p.unit)}</small></div><div class="qtyc" id="c-p:${esc(p.id)}">${ctl('p:'+p.id)}</div></div>`).join('');
+  const ph=D.products.filter(p=>p.photo);
+  $('#gal').innerHTML=(D.featurePhoto?`<figure class="ph wide" data-lb="${esc(D.featurePhoto)}" data-t="من شغلنا" data-s="تجهيزات متغلفة وجاهزة للتوصيل"><img src="${esc(D.featurePhoto)}" alt="تجهيزات ع الفرازة متغلفة وجاهزة" loading="lazy"><figcaption><div><b>من شغلنا</b><small>كل علبة متغلفة وعليها اللوجو</small></div></figcaption></figure>`:'')+
+    ph.map(p=>`<figure class="ph" data-lb="${esc(p.photo)}" data-t="${esc(p.name)} ${esc(p.sub)}" data-s="${fmt(p.price)} جنيه / ${esc(p.unit)}"><img src="${esc(p.photo)}" alt="${esc(p.name)} من ع الفرازة" loading="lazy"><figcaption><div><b>${esc(p.name)}</b><small>${esc(p.sub||p.unit)}</small></div><span class="pp">${fmt(p.price)}</span></figcaption></figure>`).join('');
+  if(!ph.length&&!D.featurePhoto)$('#real').hidden=true;
+  const br=D.brands||[];
+  if(br.length){$('#soon').hidden=true;const g=$('#brandList');g.hidden=false;
+    g.innerHTML=br.map((b,i)=>`<article class="of"><h3>${esc(b.name)}</h3><div>${esc(b.product)}</div><p class="note" style="margin:0">${esc(b.note||'')}</p>
+    ${b.price?`<div class="row"><div class="price">${fmt(b.price)} <small>${esc(b.unit||'جنيه')}</small></div><span id="c-b:${i}">${ctl('b:'+i)}</span></div>`:''}</article>`).join('')}
+}
+function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
+function waLink(text){return `https://wa.me/${D.whatsapp}?text=${encodeURIComponent(text)}`}
+function bar(){
+  const ks=Object.keys(cart).filter(k=>cart[k]>0), total=ks.reduce((s,k)=>s+items[k].price*cart[k],0);
+  $('#bar').classList.toggle('on',ks.length>0);
+  $('#tot').textContent=fmt(total)+' جنيه';
+  $('#lines').textContent=ks.map(k=>`${items[k].name} ×${cart[k]}`).join('، ');
+  const msg=['السلام عليكم، عايز أطلب من ع الفرازة:','',...ks.map(k=>`• ${items[k].name} (${items[k].detail}) × ${cart[k]} = ${fmt(items[k].price*cart[k])} جنيه`),'',`الإجمالي: ${fmt(total)} جنيه (من غير التوصيل)`,'','الاسم: ','العنوان: ','توصيل ولا استلام من المكان؟ '].join('\n');
+  $('#send').href=waLink(msg);
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-inc],[data-dec]');if(!b)return;
+  const k=b.dataset.inc||b.dataset.dec;cart[k]=Math.max(0,(cart[k]||0)+(b.dataset.inc?1:-1));if(!cart[k])delete cart[k];refresh(k)});
+$('#clr').addEventListener('click',()=>{Object.keys(cart).forEach(k=>{delete cart[k];refresh(k)})});
+
+const hello=waLink('السلام عليكم، عايز أسأل عن منتجات ع الفرازة');
+['#navWa','#heroWa','#fWa'].forEach(s=>$(s).href=hello);
+$('#fFb').href=D.facebook;
+if(D.address){$('#addr').textContent=D.address;$('#faddr').textContent='مكان التجهيز: '+D.address}
+if(D.mapUrl)$('#mapA').href=D.mapUrl;else $('#mapA').hidden=true;
+$('#dlv').innerHTML=(D.delivery||[]).map(d=>`<div class="dl"><span>${esc(d.place)}</span><b>${fmt(d.price)} <small style="font:600 13px Cairo">جنيه</small></b></div>`).join('')||'<p class="note">بنحدد التوصيل على حسب منطقتك.</p>';$('#fTt').href=D.tiktok;$('#ph').textContent=D.phone;
+document.querySelectorAll('.area').forEach(el=>el.textContent=D.area);
+$('#fCount').textContent=D.products.length;
+if(D.updated){const [y,m,d]=D.updated.split('-');$('#upd').textContent=`آخر تحديث للأسعار: ${+d}/${+m}/${y}`}
+if(SP.length)$('#spLink').hidden=false;
+draw();bar();
+
+/* reviews */
+const R=D.reviews||[];
+if(R.length){
+  const bub=(r,h)=>`<div class="bub"${h?' aria-hidden="true"':''}><div class="meta"><span class="tg">${esc(r.tag||'')}</span><span class="stars">★★★★★</span></div><p>${esc(r.text)}</p><div class="meta"><span>رسالة على واتساب</span><span class="tk">✓✓</span></div></div>`;
+  const half=Math.ceil(R.length/2), A=R.slice(0,half), B=R.slice(half).length?R.slice(half):R;
+  const row=(L,c)=>`<div class="track ${c}">${L.map(r=>bub(r)).join('')}${L.map(r=>bub(r,1)).join('')}</div>`;
+  $('#revs').innerHTML=row(A,'a')+row(B,'b');
+}else $('#reviews').hidden=true;
+if(D.customers)document.querySelectorAll('[data-count="1000"]').forEach(e=>{e.dataset.count=D.customers;e.textContent=D.customers});
+
+/* motion */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const nav=$('.nav');addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>10),{passive:true});
+const revealSel='.pr,.of,.st,.head,.mark,.about>div:last-child,.brands,.menu,.ph';
+document.querySelectorAll(revealSel).forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.matches(revealSel));el.style.setProperty('--d',(Math.min(sib.indexOf(el),8)*0.07)+'s');el.setAttribute('data-r','')});
+document.querySelectorAll('.menu .it').forEach(el=>el.removeAttribute('data-r'));
+const count=el=>{const to=parseInt(el.dataset.count,10);if(!to||reduce){el.textContent=to||el.textContent;return}const t0=performance.now(),dur=1600;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e).toLocaleString('en-US');if(p<1)requestAnimationFrame(step)};el.textContent='0';requestAnimationFrame(step)};
+if('IntersectionObserver' in window&&!reduce){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+  document.querySelectorAll('.ph').forEach(el=>el.removeAttribute('data-r'));
+  document.querySelectorAll('.ph').forEach(el=>io.observe(el));
+  const co=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){count(e.target);co.unobserve(e.target)}}),{threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+}else document.querySelectorAll('[data-r],.ph').forEach(el=>el.classList.add('in'));
+/* intro + hero */
+const intro=$('#intro'),hero=$('.hero');
+const start=()=>{intro.classList.add('out');hero.classList.add('go');setTimeout(()=>intro.remove(),1200)};
+if(reduce){intro.remove();hero.classList.add('go')}else setTimeout(start,1250);
+/* scroll progress + parallax */
+const prog=$('#prog'),art=$('.art');let tick=false;
+addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${h>0?scrollY/h:0})`;
+  if(!reduce&&scrollY<innerHeight)art.style.transform=`translateY(${scrollY*.12}px)`;tick=false})},{passive:true});
+/* lightbox */
+const lb=$('#lb');
+document.addEventListener('click',e=>{const f=e.target.closest('[data-lb]');if(f){lb.querySelector('img').src=f.dataset.lb;lb.querySelector('img').alt=f.dataset.t;lb.querySelector('b').textContent=f.dataset.t;lb.querySelector('.note').textContent=f.dataset.s||'';lb.classList.add('on');lb.querySelector('.x').focus();return}
+  if(lb.classList.contains('on')&&(e.target===lb||e.target.closest('.x')))lb.classList.remove('on')});
+addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
+}
+</script>
+</body>
+</html>
