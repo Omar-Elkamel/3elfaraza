@@ -396,27 +396,25 @@ function bar(){
   const msg=['السلام عليكم، عايز أطلب من ع الفرازة:','',...ks.map(k=>`• ${items[k].name} (${items[k].detail}) × ${cart[k]} = ${fmt(items[k].price*cart[k])} جنيه`),'',`الإجمالي: ${fmt(total)} جنيه (من غير التوصيل)`,'','الاسم: ','العنوان: ','توصيل ولا استلام من المكان؟ '].join('\n');
   $('#send').href=waLink(msg);
 }
-const SLOTS=[[10,12],[12,14],[14,16],[16,18],[18,20],[20,22]];
 const isoD=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const slotTxt=([a,b])=>`من ${a>12?a-12:a} لـ ${b>12?b-12:b} ${a<12?'الصبح':a<14?'الضهر':a<18?'العصر':'بالليل'}`;
-let ckSlot=null;const DAYS2=['الحد','الاتنين','التلات','الأربع','الخميس','الجمعة','السبت'];
+const DAYS2=['الحد','الاتنين','التلات','الأربع','الخميس','الجمعة','السبت'];
 const ckDate=()=>{const v=$('#ckDate').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(v))return null;const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d)};
-function ckDraw(){const now=new Date(),di=$('#ckDate');di.min=isoD(now);const d=ckDate(),isToday=d&&isoD(d)===isoD(now);
+function ckDraw(){const now=new Date(),di=$('#ckDate');di.min=isoD(now);const d=ckDate();
   $('#ckDayN').textContent=d?`يوم ${DAYS2[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`:'';
-  $('#ckSlots').innerHTML=SLOTS.map((sl,i)=>{const past=isToday&&sl[1]<=now.getHours()+1;if(past&&ckSlot===i)ckSlot=null;return `<button type="button" data-cks="${i}" class="${i===ckSlot?'on':''}" ${past?'disabled':''}>${slotTxt(sl)}</button>`}).join('');
   $('#ckWhenL').textContent=ckPick?'هتستلم يوم كام؟':'عايزه يوصلك يوم كام؟'}
-const ckWhen=()=>{const d=ckDate();if(!d)return null;const sl=ckSlot!=null?SLOTS[ckSlot]:null;
-  return{iso:isoD(d),label:`يوم ${DAYS2[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}${sl?' '+slotTxt(sl):''}`,from:sl?String(sl[0]).padStart(2,'0')+':00':'',to:sl?String(sl[1]).padStart(2,'0')+':00':''}};
+const tTxt=v=>{if(!/^\d{2}:\d{2}/.test(v||''))return '';let [h,m]=v.split(':').map(Number);const p=h<12?'الصبح':h<15?'الضهر':h<18?'العصر':'بالليل';h=h%12||12;return `${h}${m?':'+String(m).padStart(2,'0'):''} ${p}`};
+const ckWhen=()=>{const d=ckDate(),f=$('#ckF').value,t=$('#ckT').value;if(!d&&!f&&!t)return null;
+  const tm=f&&t?`من ${tTxt(f)} لـ ${tTxt(t)}`:f?`من ${tTxt(f)}`:t?`قبل ${tTxt(t)}`:'';
+  return{iso:d?isoD(d):'',label:[d?`يوم ${DAYS2[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`:'',tm].filter(Boolean).join(' '),from:f||'',to:t||''}};
 let ckPick=false;const ckState=()=>{const ks=Object.keys(cart).filter(k=>cart[k]>0),total=ks.reduce((s,k)=>s+items[k].price*cart[k],0),nm=$('#ckN').value.trim(),ph=$('#ckP').value.trim(),ad=$('#ckA').value.trim();
   const msg=['السلام عليكم، عايز أطلب من ع الفرازة:','',...ks.map(k=>`• ${items[k].name} (${items[k].detail}) × ${cart[k]} = ${fmt(items[k].price*cart[k])} جنيه`),'',`الإجمالي: ${fmt(total)} جنيه (من غير التوصيل)`,'',`الاسم: ${nm}`,`الموبايل: ${ph}`,ckPick?'هستلم من المكان':`العنوان: ${ad}`,...(ckWhen()?[`${ckPick?'ميعاد الاستلام':'ميعاد التوصيل'}: ${ckWhen().label}`]:[])].join('\n');
   $('#ckGo').href=waLink(msg);return{ks,total,nm,ph,ad,w:ckWhen()}};
 $('#send').addEventListener('click',e=>{e.preventDefault();try{const v=JSON.parse(localStorage.getItem('fz_ck')||'{}');['N','P','A'].forEach(k=>{if(v[k]&&!$('#ck'+k).value)$('#ck'+k).value=v[k]})}catch(_){}ckDraw();ckState();$('#ck').classList.add('on')});
-['#ckN','#ckP','#ckA'].forEach(s=>$(s).addEventListener('input',ckState));$('#ckDate').addEventListener('change',()=>{const d=ckDate();if(d&&isoD(d)<isoD(new Date()))$('#ckDate').value='';ckDraw();ckState()});
-$('#ck').addEventListener('click',e=>{const m=e.target.closest('[data-ckm]');if(m){ckPick=m.dataset.ckm==='1';document.querySelectorAll('[data-ckm]').forEach(x=>x.classList.toggle('on',x===m));ckDraw();ckState()}
-  const sb=e.target.closest('[data-cks]');if(sb&&!sb.disabled){ckSlot=+sb.dataset.cks;ckDraw();ckState()}if(e.target.id==='ck'||e.target.closest('#ckX'))$('#ck').classList.remove('on')});
+['#ckN','#ckP','#ckA','#ckF','#ckT'].forEach(s=>$(s).addEventListener('input',ckState));$('#ckDate').addEventListener('change',()=>{const d=ckDate();if(d&&isoD(d)<isoD(new Date()))$('#ckDate').value='';ckDraw();ckState()});
+$('#ck').addEventListener('click',e=>{const m=e.target.closest('[data-ckm]');if(m){ckPick=m.dataset.ckm==='1';document.querySelectorAll('[data-ckm]').forEach(x=>x.classList.toggle('on',x===m));ckDraw();ckState()}if(e.target.id==='ck'||e.target.closest('#ckX'))$('#ck').classList.remove('on')});
 $('#ckGo').addEventListener('click',()=>{const v=ckState();try{localStorage.setItem('fz_ck',JSON.stringify({N:v.nm,P:v.ph,A:v.ad}))}catch(_){}
   if(window.fzInbox&&v.ks.length){const ad=v.ad.slice(0,150),sp=ad.split(/[،,]/);window.fzInbox({name:v.nm.slice(0,60),phone:v.ph.slice(0,20),area:ckPick?'استلام من المكان':(sp.length>1?sp[0].trim().slice(0,40):''),address:ckPick?'':(sp.length>1?sp.slice(1).join('،').trim():ad).slice(0,150),
-    lines:v.ks.slice(0,30).map(k=>({name:String(items[k].name).slice(0,80),qty:Number(cart[k])||1,price:Number(items[k].price)||0})),total:Number(v.total)||0,at:Date.now(),...(v.w?{ddate:v.w.iso,dtime:v.w.from,dto:v.w.to}:{})})}
+    lines:v.ks.slice(0,30).map(k=>({name:String(items[k].name).slice(0,80),qty:Number(cart[k])||1,price:Number(items[k].price)||0})),total:Number(v.total)||0,at:Date.now(),...(v.w?{ddate:v.w.iso,dtime:v.w.from.slice(0,5),dto:v.w.to.slice(0,5)}:{})})}
   setTimeout(()=>$('#ck').classList.remove('on'),400)});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-inc],[data-dec]');if(!b)return;
   const k=b.dataset.inc||b.dataset.dec;cart[k]=Math.max(0,(cart[k]||0)+(b.dataset.inc?1:-1));if(!cart[k])delete cart[k];refresh(k)});
@@ -509,7 +507,7 @@ clearTimeout(t);go();
 <label for="ckP">رقم الموبايل</label><input id="ckP" inputmode="tel" autocomplete="tel" dir="ltr" style="text-align:right">
 <label for="ckA">المنطقة والعنوان</label><input id="ckA" autocomplete="street-address" placeholder="مثلًا: دمياط الجديدة، الحي التاني…">
 <div class="seg"><button type="button" class="on" data-ckm="0">توصيل</button><button type="button" data-ckm="1">هستلم من المكان</button></div>
-<label id="ckWhenL" for="ckDate">عايزه يوصلك يوم كام؟</label><input type="date" id="ckDate"><div class="note" id="ckDayN" style="margin-top:4px;font-weight:700"></div><label>في أنهي ميعاد؟</label><div class="slots" id="ckSlots"></div>
+<label id="ckWhenL" for="ckDate">عايزه يوصلك يوم كام؟</label><input type="date" id="ckDate"><div class="note" id="ckDayN" style="margin-top:4px;font-weight:700"></div><div style="display:flex;gap:10px"><div style="flex:1"><label for="ckF">من الساعة</label><input type="time" id="ckF"></div><div style="flex:1"><label for="ckT">لحد الساعة</label><input type="time" id="ckT"></div></div>
 <a class="btn wa go" id="ckGo" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>ابعت الطلب على واتساب</a></div></div>
 </body>
 </html>
