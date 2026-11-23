@@ -103,6 +103,8 @@ h2{font-size:clamp(30px,5vw,44px);color:var(--g2)}
 .qty button{width:42px;height:40px;border:0;border-radius:9px;background:var(--card);color:var(--g2);font:800 22px Cairo,sans-serif;cursor:pointer;line-height:1}
 .qty span{min-width:34px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
 /* menu */
+.mtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.mtabs button{min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:800 15px Cairo,sans-serif;color:inherit;cursor:pointer}.mtabs button.on{background:var(--g2,#1f523e);border-color:transparent;color:#fff}
+.mgh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:18px 4px 10px}.mgh h3{font-family:var(--disp);font-size:22px;margin:0}.mgh span{color:var(--mut);font-weight:700;font-size:14px}.mgh:first-child{margin-top:0}
 .menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px 22px}
 .it{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--line)}
 .it b{font-family:var(--disp);font-size:21px;line-height:1.2}
@@ -307,8 +309,9 @@ footer small{display:block;opacity:.75;margin-top:6px}
 </div></section>
 
 <section class="band" id="menu" style="padding-top:0"><div class="wrap">
-  <div class="head"><div><h2>منيو التجهيزات</h2><p class="lead">الأسعار بالجنيه المصري على الوحدة المكتوبة جنب كل صنف.</p></div><span class="upd" id="upd"></span></div>
-  <div class="menu" id="menuList"></div>
+  <div class="head"><div><h2>المنيو</h2><p class="lead">الأسعار بالجنيه المصري على الوحدة المكتوبة جنب كل صنف.</p></div><span class="upd" id="upd"></span></div>
+  <div class="mtabs" id="mtabs" hidden></div>
+  <div id="menuWrap"><div class="menu" id="menuList"></div></div>
 </div></section>
 
 <section class="band" id="how" style="padding-top:0"><div class="wrap">
@@ -345,8 +348,8 @@ footer small{display:block;opacity:.75;margin-top:6px}
 
 <section class="wrap" id="brands"><div class="brands">
   <div>
-    <h2>براندات مختارة</h2>
-    <p class="lead" style="max-width:62ch">بندور على أحسن البراندات في الخامة والطعم، عشان نضيفها للمنيو جنب التجهيزات بتاعتنا. وأي براند هيوصلك من عندنا هنكون جربناه بنفسنا الأول.</p>
+    <h2>شركاء النجاح</h2>
+    <p class="lead" style="max-width:62ch">بنختار شركاءنا بعناية في الخامة والطعم، وأي منتج بيوصلك من عندنا جربناه بنفسنا الأول، وبنجهزه ونغلفه عندنا بنفس عنايتنا بتجهيزاتنا.</p>
   </div>
   <div class="soon" id="soon">قريبًا</div>
   <div class="bgrid" id="brandList" hidden></div>
@@ -394,15 +397,21 @@ function draw(){
   $('#offerList').innerHTML=D.offers.map(o=>`<article class="of${o.tag?' hot':''}">${o.tag?`<span class="tag">${esc(o.tag)}</span>`:''}
     <h3>${esc(o.name)}</h3><ul>${o.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
     <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small></div><span id="c-o:${esc(o.id)}">${ctl('o:'+o.id)}</span></div></article>`).join('');
-  $('#menuList').innerHTML=D.products.map(p=>`<div class="it"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
-    <div class="p">${fmt(p.price)}<small>${esc(p.unit)}</small></div><div class="qtyc" id="c-p:${esc(p.id)}">${ctl('p:'+p.id)}</div></div>`).join('');
+  const row=p=>`<div class="it"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
+    <div class="p">${fmt(p.price)}<small>${esc(p.unit)}</small></div><div class="qtyc" id="c-p:${esc(p.id)}">${ctl('p:'+p.id)}</div></div>`;
+  const MG=[['','خضار ومحشي','تجهيزات ع الفرازة'],['meat','لحوم مجمدة','برازيلي مستورد · توريد أسواق الدالي للمجمدات']].map(([c,t,sub])=>({c,t,sub,ps:D.products.filter(p=>(p.cat||'')===c)})).filter(g=>g.ps.length);
+  const drawMenu=sel=>{$('#menuWrap').innerHTML=MG.filter(g=>sel==null||g.c===sel).map(g=>`${MG.length>1?`<div class="mgh"><h3>${g.t}</h3><span>${g.sub}</span></div>`:''}<div class="menu">${g.ps.map(row).join('')}</div>`).join('');
+    document.querySelectorAll('#mtabs button').forEach(b=>b.classList.toggle('on',(b.dataset.mc===''+'all'&&sel==null)||b.dataset.mc===sel))};
+  if(MG.length>1){$('#mtabs').hidden=false;$('#mtabs').innerHTML=`<button type="button" data-mc="all">الكل</button>`+MG.map(g=>`<button type="button" data-mc="${g.c}">${g.c==='meat'?'🥩 ':'🥬 '}${g.t}</button>`).join('');
+    $('#mtabs').addEventListener('click',e=>{const b=e.target.closest('[data-mc]');if(b)drawMenu(b.dataset.mc==='all'?null:b.dataset.mc)})}
+  drawMenu(null);window.fzMenu=drawMenu;
   const ph=D.products.filter(p=>p.photo);
   $('#gal').innerHTML=(D.featurePhoto?`<figure class="ph wide" data-lb="${esc(D.featurePhoto)}" data-t="من شغلنا" data-s="تجهيزات متغلفة وجاهزة للتوصيل"><img src="${esc(D.featurePhoto)}" alt="تجهيزات ع الفرازة متغلفة وجاهزة" loading="lazy"><figcaption><div><b>من شغلنا</b><small>كل علبة متغلفة وعليها اللوجو</small></div></figcaption></figure>`:'')+
     ph.map(p=>`<figure class="ph" data-lb="${esc(p.photo)}" data-t="${esc(p.name)} ${esc(p.sub)}" data-s="${fmt(p.price)} جنيه / ${esc(p.unit)}"><img src="${esc(p.photo)}" alt="${esc(p.name)} من ع الفرازة" loading="lazy"><figcaption><div><b>${esc(p.name)}</b><small>${esc(p.sub||p.unit)}</small></div><span class="pp">${fmt(p.price)}</span></figcaption></figure>`).join('');
   if(!ph.length&&!D.featurePhoto)$('#real').hidden=true;
   const br=D.brands||[];
   if(br.length){$('#soon').hidden=true;const g=$('#brandList');g.hidden=false;
-    g.innerHTML=br.map((b,i)=>`<article class="of"><h3>${esc(b.name)}</h3><div>${esc(b.product)}</div><p class="note" style="margin:0">${esc(b.note||'')}</p>
+    g.innerHTML=br.map((b,i)=>`<article class="of">${b.photo?`<img src="${esc(b.photo)}" alt="" style="width:100%;border-radius:14px;margin-bottom:8px">`:''}<span class="tag">🤝 شريك نجاح</span><h3>${esc(b.name)}</h3><div>${esc(b.product)}</div><p class="note" style="margin:0">${esc(b.note||'')}</p>${b.cat?`<a class="btn o" href="#menu" data-gomc="${esc(b.cat)}" style="justify-content:center;margin-top:6px">شوف منتجاتهم والأسعار</a>`:''}
     ${b.price?`<div class="row"><div class="price">${fmt(b.price)} <small>${esc(b.unit||'جنيه')}</small></div><span id="c-b:${i}">${ctl('b:'+i)}</span></div>`:''}</article>`).join('')}
 }
 function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
@@ -447,6 +456,7 @@ $('#ckGo').addEventListener('click',()=>{const v=ckState();try{localStorage.setI
   if(window.fzInbox&&v.ks.length){const ad=v.ad.slice(0,150),sp=ad.split(/[،,]/);window.fzInbox({name:v.nm.slice(0,60),phone:v.ph.slice(0,20),area:ckPick?'استلام من المكان':(sp.length>1?sp[0].trim().slice(0,40):''),address:ckPick?'':(sp.length>1?sp.slice(1).join('،').trim():ad).slice(0,150),
     lines:v.ks.slice(0,30).map(k=>({name:String(items[k].name).slice(0,80),qty:Number(cart[k])||1,price:Number(items[k].price)||0})),total:Number(v.total)||0,at:Date.now(),...(v.w?{ddate:v.w.iso,dtime:v.w.from.slice(0,5),dto:v.w.to.slice(0,5)}:{})})}
   setTimeout(()=>$('#ck').classList.remove('on'),400)});
+document.addEventListener('click',e=>{const gm=e.target.closest('[data-gomc]');if(gm&&window.fzMenu)window.fzMenu(gm.dataset.gomc)});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-inc],[data-dec]');if(!b)return;
   const k=b.dataset.inc||b.dataset.dec;cart[k]=Math.max(0,(cart[k]||0)+(b.dataset.inc?1:-1));if(!cart[k])delete cart[k];refresh(k)});
 $('#clr').addEventListener('click',()=>{Object.keys(cart).forEach(k=>{delete cart[k];refresh(k)})});

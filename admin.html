@@ -68,17 +68,19 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=t=>{const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2200)};
 let D=null,dirty=false,IMG={};
+const CATS=[['','خضار ومحشي'],['meat','لحوم مجمدة']];
 const LISTS=['heroPosters','specials','offers','products','delivery','reviews','brands'];
 const SCH={
   specials:{title:'عروض خاصة',hint:'بتظهر في قسم لوحده فوق العروض، وبتختفي لوحدها بعد آخر يوم.',add:'+ عرض خاص',f:[['name','اسم العرض'],['price','السعر','n'],['oldPrice','السعر قبل العرض (اختياري)','n'],['ends','آخر يوم للعرض','d'],['items','محتوى العرض (كل صنف في سطر)','l']]},
   offers:{title:'العروض الأساسية',hint:'العروض اللي شغالة على طول.',add:'+ عرض',f:[['name','اسم العرض'],['price','السعر','n'],['tag','كلمة فوق الكارت (اختياري)'],['items','محتوى العرض (كل صنف في سطر)','l']]},
-  products:{title:'المنيو والصور',hint:'الأصناف وأسعارها. الصورة بتظهر في قسم "على الطبيعة".',add:'+ صنف',f:[['off','خلص / مش متاح دلوقتي (مش هيظهر في الموقع)','b'],['photo','صورة المنتج','img'],['name','الصنف'],['sub','الوصف (مسلوق، متقطع…)'],['unit','الوحدة (كيلو، 500 جرام، 3 حزم…)'],['price','السعر','n']]},
+  products:{title:'المنيو والصور',hint:'الأصناف وأسعارها. الصورة بتظهر في قسم "على الطبيعة".',add:'+ صنف',f:[['off','خلص / مش متاح دلوقتي (مش هيظهر في الموقع)','b'],['cat','القسم','s'],['photo','صورة المنتج','img'],['name','الصنف'],['sub','الوصف (مسلوق، متقطع…)'],['unit','الوحدة (كيلو، 500 جرام، 3 حزم…)'],['price','السعر','n']]},
   delivery:{title:'أسعار التوصيل',hint:'المنطقة وسعر التوصيل ليها.',add:'+ منطقة',f:[['place','المنطقة'],['price','السعر','n']]},
   reviews:{title:'كلام العملاء',hint:'رسايل العملاء اللي بتظهر في الموقع (من غير أسماء).',add:'+ رسالة',f:[['tag','كلمة صغيرة (نضافة، طزاجة…)'],['text','الرسالة','t']]},
-  brands:{title:'براندات مختارة',hint:'لو القائمة فاضية الموقع بيكتب "قريبًا".',add:'+ براند',f:[['photo','الصورة (اختياري)','img'],['name','اسم البراند'],['product','المنتج'],['unit','الوحدة'],['price','السعر (اختياري)','n'],['note','ليه اخترناه','t']]}
+  brands:{title:'شركاء النجاح',hint:'البراندات اللي بنتعاون معاها. لو القائمة فاضية الموقع بيكتب "قريبًا".',add:'+ شريك',f:[['photo','الصورة (اختياري)','img'],['name','اسم البراند'],['product','المنتج'],['unit','الوحدة'],['price','السعر (اختياري)','n'],['note','ليه اخترناه','t'],['cat','زرار "شوف منتجاتهم" يفتح قسم','s']]}
 };
 const src=v=>!v?'':v.startsWith('fs:')?(IMG[v.slice(3)]||''):v;
 const mark=()=>{dirty=true;$('#st').textContent='فيه تعديلات ما اتحفظتش'};
+window.__fz={get:()=>D,apply:fn=>{fn(D);mark();draw()}};
 
 /* image upload: resize & compress to fit Firestore */
 function compress(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
@@ -96,6 +98,7 @@ function field(k,i,[f,l,t]){const v=D[k][i][f];
   if(t==='img')return imgField(k,i,f,l);
   if(t==='l')return `<label class="full"><span>${l}</span><textarea data-k="${k}" data-i="${i}" data-f="${f}" data-t="l">${esc((v||[]).join('\n'))}</textarea></label>`;
   if(t==='t')return `<label class="full"><span>${l}</span><textarea data-k="${k}" data-i="${i}" data-f="${f}">${esc(v)}</textarea></label>`;
+  if(t==='s')return `<label><span>${l}</span><select data-k="${k}" data-i="${i}" data-f="${f}">${CATS.map(([v,n])=>`<option value="${v}" ${(v||'')===(D[k][i][f]||'')?'selected':''}>${n}</option>`).join('')}</select></label>`;
   if(t==='b')return `<label class="full" style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" data-k="${k}" data-i="${i}" data-f="${f}" data-t="b" ${v?'checked':''} style="width:22px;height:22px;accent-color:#c0392b"><span style="margin:0;font-weight:700;color:${v?'#c0392b':'inherit'}">${l}</span></label>`;
   return `<label><span>${l}</span><input data-k="${k}" data-i="${i}" data-f="${f}" data-t="${t||''}" ${t==='n'?'type="number" inputmode="decimal"':t==='d'?'type="date"':''} value="${esc(v??'')}"></label>`}
 function draw(){
