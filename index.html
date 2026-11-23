@@ -65,6 +65,16 @@ h2{font-size:clamp(30px,5vw,44px);color:var(--g2)}
 .art .stamp{position:absolute;bottom:2%;right:0;background:var(--o);color:#fff;font-family:var(--disp);font-weight:800;border-radius:50%;width:118px;height:118px;display:grid;place-items:center;text-align:center;line-height:1.1;font-size:19px;transform:rotate(8deg);box-shadow:0 10px 24px rgba(0,0,0,.3)}
 .wave{position:absolute;bottom:-1px;left:0;width:100%;height:40px;color:var(--bg)}
 /* promises */
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.qc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.qc h3{font-family:var(--disp);font-size:22px;margin:0 0 4px}.qc p{margin:0 0 12px;color:var(--mut)}
+.fam{display:flex;gap:8px;flex-wrap:wrap}.fam button{flex:1;min-width:90px;min-height:46px;border-radius:14px;border:1px solid var(--line);background:none;font:700 15px Cairo,sans-serif;color:inherit;cursor:pointer}
+.fam button.on{border-color:var(--o);background:color-mix(in srgb,var(--o) 14%,transparent)}
+.sug{margin-top:12px;border:1px dashed var(--o);border-radius:16px;padding:14px;display:none}.sug.on{display:block}
+.sug b{font-family:var(--disp);font-size:19px}.sug .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}
+.qc textarea{width:100%;box-sizing:border-box;min-height:96px;font:600 16px Cairo,sans-serif;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--bg,#fff);color:inherit;resize:vertical}
+.qc .go{margin-top:10px;width:100%;justify-content:center}
+@media(max-width:860px){.quick{grid-template-columns:minmax(0,1fr)}}
 .promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-10px}
 .pr{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;gap:14px;align-items:flex-start}
 .pr i{flex:none;width:52px;height:52px;border-radius:16px;background:var(--soft);display:grid;place-items:center;color:var(--g2)}
@@ -272,6 +282,15 @@ footer small{display:block;opacity:.75;margin-top:6px}
   </div>
 </section>
 
+<section class="band" id="quick" style="padding-bottom:0"><div class="wrap"><div class="quick">
+  <div class="qc"><h3>مش عارف تختار؟</h3><p>البيت كام فرد؟ وإحنا نقترحلك العرض المناسب.</p>
+    <div class="fam"><button type="button" data-fam="1">1 – 2</button><button type="button" data-fam="2">3 – 4</button><button type="button" data-fam="3">5 وأكتر</button></div>
+    <div class="sug" id="sug"></div></div>
+  <div class="qc"><h3>اكتب طلبك بكلامك</h3><p>مش حابب تدوّر؟ اكتب اللي محتاجه وابعته واتساب على طول.</p>
+    <textarea id="qText" placeholder="مثلًا: 2 كيلو كرنب ونص كيلو ورق عنب، والتوصيل يوم الخميس الساعة 5"></textarea>
+    <a class="btn wa go" id="qGo" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>ابعت طلبك على واتساب</a></div>
+</div></div></section>
+
 <section class="band" id="specials" hidden><div class="wrap">
   <div class="head"><div><h2 style="color:var(--o2)">عروض خاصة</h2><p class="lead">عروض لفترة محدودة، الحق قبل ما تخلص.</p></div></div>
   <div class="offers" id="specialList"></div>
@@ -352,7 +371,7 @@ footer small{display:block;opacity:.75;margin-top:6px}
 <script src="data.js"></script>
 <script>
 window.bootSite=function(){
-const D=window.FARAZA||{offers:[],products:[],brands:[]};
+const D=window.FARAZA||{offers:[],products:[],brands:[]};D.products=(D.products||[]).filter(p=>!p.off);
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>Number(n).toLocaleString('en-US');
@@ -388,6 +407,18 @@ function draw(){
 }
 function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
 function waLink(text){return `https://wa.me/${D.whatsapp}?text=${encodeURIComponent(text)}`}
+/* quick order: family helper + free text */
+const famPick=n=>{const os=[...(D.offers||[])].filter(o=>o.price>0).sort((a,b)=>a.price-b.price);if(!os.length)return null;
+  const pop=os.find(o=>o.tag)||os[Math.floor(os.length/2)];return n===1?{o:os[0],q:1}:n===2?{o:pop,q:1}:{o:pop,q:2}};
+let famSel=null;
+document.addEventListener('click',e=>{const f=e.target.closest('[data-fam]');if(f){famSel=famPick(+f.dataset.fam);document.querySelectorAll('[data-fam]').forEach(x=>x.classList.toggle('on',x===f));
+    const el=$('#sug');if(!famSel){el.classList.remove('on');return}const {o,q}=famSel;
+    el.innerHTML=`<span style="color:var(--mut);font-weight:700">نقترحلك:</span><br><b>${esc(o.name)}${q>1?' × '+q:''}</b><div style="color:var(--mut);margin-top:2px">${esc((o.items||[]).join(' + '))}</div><div class="row"><b style="color:var(--o2)">${fmt(o.price*q)} جنيه</b><button type="button" class="btn o" data-famadd>ضيفه للطلب</button></div>`;el.classList.add('on');return}
+  if(e.target.closest('[data-famadd]')&&famSel){const k='o:'+famSel.o.id;if(!items[k])return;cart[k]=(cart[k]||0)+famSel.q;refresh(k);const b=e.target.closest('[data-famadd]');b.textContent='اتضاف ✓';b.disabled=true}});
+const qUpd=()=>{const t=$('#qText').value.trim();$('#qGo').href=waLink(t?`السلام عليكم، عايز أطلب من ع الفرازة:\n\n${t}`:'السلام عليكم، عايز أطلب من ع الفرازة');};
+$('#qText').addEventListener('input',qUpd);qUpd();
+$('#qGo').addEventListener('click',e=>{if(!$('#qText').value.trim()){e.preventDefault();$('#qText').focus();$('#qText').placeholder='اكتب طلبك هنا الأول 👆'}});
+
 function bar(){
   const ks=Object.keys(cart).filter(k=>cart[k]>0), total=ks.reduce((s,k)=>s+items[k].price*cart[k],0);
   $('#bar').classList.toggle('on',ks.length>0);
