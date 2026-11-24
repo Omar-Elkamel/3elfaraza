@@ -71,12 +71,16 @@ h2{font-size:clamp(30px,5vw,44px);color:var(--g2)}
 .quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .qc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
 .qc h3{font-family:var(--disp);font-size:22px;margin:0 0 4px}.qc p{margin:0 0 12px;color:var(--mut)}
-.fam{display:flex;gap:8px;flex-wrap:wrap}.fam button{flex:1;min-width:90px;min-height:46px;border-radius:14px;border:1px solid var(--line);background:none;font:700 15px Cairo,sans-serif;color:inherit;cursor:pointer}
+.fam{display:flex;gap:8px;flex-wrap:wrap}.fam button{flex:1;min-width:84px;padding:0 6px;white-space:nowrap;min-height:46px;border-radius:14px;border:1px solid var(--line);background:none;font:700 15px Cairo,sans-serif;color:inherit;cursor:pointer}
 .fam button.on{border-color:var(--o);background:color-mix(in srgb,var(--o) 14%,transparent)}
 .sug{margin-top:12px;border:1px dashed var(--o);border-radius:16px;padding:14px;display:none}.sug.on{display:block}
 .sug b{font-family:var(--disp);font-size:19px}.sug .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}
 .qc textarea{width:100%;box-sizing:border-box;min-height:96px;font:600 16px Cairo,sans-serif;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--bg,#fff);color:inherit;resize:vertical}
 .qc .go{margin-top:10px;width:100%;justify-content:center}
+.qlbl{font-weight:800;font-size:14px;margin:12px 0 6px;color:var(--mut)}.qc .qlbl:first-of-type{margin-top:0}
+.qchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.qchips button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font:700 14px Cairo,sans-serif;color:inherit;cursor:pointer;min-height:36px}
+.qchips button:active,.qchips button.hit{border-color:var(--o);background:color-mix(in srgb,var(--o) 14%,transparent)}
+.sug .pk{padding:8px 0;border-bottom:1px dashed var(--line)}.sug .pk:last-of-type{border-bottom:0}
 @media(max-width:860px){.quick{grid-template-columns:minmax(0,1fr)}}
 .promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-10px}
 .pr{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;gap:14px;align-items:flex-start}
@@ -267,7 +271,7 @@ body.baron .fwa{bottom:96px}
   <div class="wrap">
     <div>
       <h1><span class="ln"><span>كل حاجة في مطبخك</span></span><span class="ln"><span><em>على الفرازة</em></span></span></h1>
-      <p class="rest">إحنا مش بنبيع خضار ولحمة وخلاص. بنختار كل صنف بإيدينا، ونفرزه ونجهزه ونغلفه كأنه رايح بيتنا. من الكرنب المسلوق وورق العنب لحد اللحوم المختارة، مفيش حاجة بتوصلك غير لما تعدي على الفرازة الأول. وإنتِ عليكي الطبخ بس.</p>
+      <p class="rest">إحنا مش مجرد مكان بيبيع منتجات. كل حاجة بتدخل مطبخك بنختارها بإيدينا، ونفرزها ونجهزها ونغلفها كأنها رايحة بيتنا. ومفيش حاجة بتوصلك غير لما تعدي على الفرازة الأول. وإنتِ عليكي الطبخ بس.</p>
       <div class="cta rest r2"><a class="btn" href="#offers">شوف العروض</a><a class="btn line" id="heroWa" href="#">اطلب على واتساب</a></div>
       <div class="facts rest r3"><div><b><span data-count="1000">1000</span>+</b><span>عميل وثقوا فينا</span></div><div><b id="fCount" data-count="13">13</b><span>صنف مختار ومتجهز</span></div><div><b>لحد البيت</b><span>توصيل في <span class="area">دمياط</span></span></div></div>
     </div>
@@ -286,17 +290,21 @@ body.baron .fwa{bottom:96px}
 <section class="wrap" style="padding-top:20px">
   <div class="promise">
     <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.2-6"/></svg></i><div><b>مختار بإيدينا</b><span>كل صنف بيتفرز ويتنقى، واللي مش على مستوانا بيطلع برة.</span></div></div>
-    <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></i><div><b>متجهز بضمير</b><span>بننضف ونقطع ونسلق ونغلف زي ما بنعمل لبيتنا بالظبط.</span></div></div>
+    <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></i><div><b>متجهز بضمير</b><span>كل حاجة بتتجهز وتتغلف زي ما بنعملها لبيتنا بالظبط.</span></div></div>
     <div class="pr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M6 14l3-7h5l2 4h3l2 3"/></svg></i><div><b>جاهز على الحلة</b><span>يوصلك متغلف ونضيف في ميعادك، تفتحه وتبدأ تطبخ على طول.</span></div></div>
   </div>
 </section>
 
 <section class="band" id="quick" style="padding-bottom:0"><div class="wrap"><div class="quick">
-  <div class="qc"><h3>مش عارف تختار؟</h3><p>البيت كام فرد؟ وإحنا نقترحلك العرض المناسب.</p>
+  <div class="qc"><h3>مش عارف تختار؟</h3><p>قولنا البيت كام فرد ونفسك في إيه، وإحنا نقترحلك.</p>
+    <div class="qlbl">البيت كام فرد؟</div>
     <div class="fam"><button type="button" data-fam="1">1 – 2</button><button type="button" data-fam="2">3 – 4</button><button type="button" data-fam="3">5 وأكتر</button></div>
+    <div class="qlbl">نفسك في إيه؟</div>
+    <div class="fam"><button type="button" data-want="veg">🥬 خضار ومحشي</button><button type="button" data-want="meat">🥩 لحوم</button><button type="button" data-want="both" class="on">الاتنين</button></div>
     <div class="sug" id="sug"></div></div>
-  <div class="qc"><h3>اكتب طلبك بكلامك</h3><p>مش حابب تدوّر؟ اكتب اللي محتاجه وابعته واتساب على طول.</p>
-    <textarea id="qText" placeholder="مثلًا: 2 كيلو كرنب ونص كيلو ورق عنب، والتوصيل يوم الخميس الساعة 5"></textarea>
+  <div class="qc"><h3>اكتب طلبك بكلامك</h3><p>مش حابب تدوّر؟ اكتب اللي محتاجه أو دوس على الأصناف تحت، وابعته واتساب على طول.</p>
+    <div class="qchips" id="qChips"></div>
+    <textarea id="qText" placeholder="مثلًا: 2 كيلو كرنب ونص كيلو ورق عنب ونص كيلو كفتة، والتوصيل يوم الخميس الساعة 5"></textarea>
     <a class="btn wa go" id="qGo" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>ابعت طلبك على واتساب</a></div>
 </div></div></section>
 
@@ -348,7 +356,7 @@ body.baron .fwa{bottom:96px}
     <h2>عن ع الفرازة</h2>
     <p class="lead" style="margin-bottom:16px">"على الفرازة" يعني المنقّي، اللي اتختار من بين الكل. وده الوعد اللي في اسمنا.</p>
     <p>ع الفرازة بدأت في <span class="area">دمياط</span> من سؤال بسيط: ليه ست البيت تقضي ساعات في التنضيف والتقطيع والسلق قبل ما تبتدي تطبخ؟ قررنا ناخد الحمل ده عنها، بشرط واحد: نعمله أحسن ما كانت هتعمله بنفسها.</p>
-    <p>كل صنف بيعدي علينا بيتفرز حتة حتة، وبعدها بنجهزه ونغلفه في علب نضيفة. وبنختار شركاءنا بنفس الدقة اللي بنختار بيها الخضار. عشان كده كل يوم بنطوّر في المنتجات والتغليف، لأن اللي يوصلك لازم يكون على الفرازة فعلًا.</p>
+    <p>كل صنف بيعدي علينا بيتفرز حتة حتة، وبعدها بنجهزه ونغلفه في علب نضيفة. وبنختار شركاءنا ومنتجاتنا كلها بنفس الدقة. عشان كده كل يوم بنطوّر في المنتجات والتغليف، لأن اللي يوصلك لازم يكون على الفرازة فعلًا.</p>
     <div class="vals"><span>مختار بإيدينا</span><span>نضافة في كل خطوة</span><span>سعر عادل</span><span>في ميعادك</span></div>
   </div>
 </div></section>
@@ -397,7 +405,7 @@ D.products.forEach(p=>items['p:'+p.id]={name:p.name+(p.sub?' '+p.sub:''),price:p
 
 const ctl=k=>cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
 
-function draw(){
+function draw(){try{qChipsDraw()}catch(_){}
   if(SP.length){$('#specials').hidden=false;
     $('#specialList').innerHTML=SP.map(o=>{const e=o.ends?o.ends.split('-'):null;return `<article class="of sp"><span class="tag">لفترة محدودة</span>
     <h3>${esc(o.name)}</h3><ul>${(o.items||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${e?`<div class="ends">العرض لحد ${+e[2]}/${+e[1]}</div>`:''}
@@ -425,13 +433,28 @@ function draw(){
 function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
 function waLink(text){return `https://wa.me/${D.whatsapp}?text=${encodeURIComponent(text)}`}
 /* quick order: family helper + free text */
-const famPick=n=>{const os=[...(D.offers||[])].filter(o=>o.price>0).sort((a,b)=>a.price-b.price);if(!os.length)return null;
-  const pop=os.find(o=>o.tag)||os[Math.floor(os.length/2)];return n===1?{o:os[0],q:1}:n===2?{o:pop,q:1}:{o:pop,q:2}};
-let famSel=null;
-document.addEventListener('click',e=>{const f=e.target.closest('[data-fam]');if(f){famSel=famPick(+f.dataset.fam);document.querySelectorAll('[data-fam]').forEach(x=>x.classList.toggle('on',x===f));
-    const el=$('#sug');if(!famSel){el.classList.remove('on');return}const {o,q}=famSel;
-    el.innerHTML=`<span style="color:var(--mut);font-weight:700">نقترحلك:</span><br><b>${esc(o.name)}${q>1?' × '+q:''}</b><div style="color:var(--mut);margin-top:2px">${esc((o.items||[]).join(' + '))}</div><div class="row"><b style="color:var(--o2)">${fmt(o.price*q)} جنيه</b><button type="button" class="btn o" data-famadd>ضيفه للطلب</button></div>`;el.classList.add('on');return}
-  if(e.target.closest('[data-famadd]')&&famSel){const k='o:'+famSel.o.id;if(!items[k])return;cart[k]=(cart[k]||0)+famSel.q;refresh(k);const b=e.target.closest('[data-famadd]');b.textContent='اتضاف ✓';b.disabled=true}});
+const MEATRE=/لحم|كفتة|برجر|سجق|شاورما|كبدة|مفروم/,VEGRE=/كرنب|ورق عنب|ملوخية|طماطم|فاصوليا|بنجر|قلقاس|سلق|هريسة|محشي/;
+const oKind=o=>{const t=(o.items||[]).join(' ')+' '+o.name,m=MEATRE.test(t),v=VEGRE.test(t);return m&&v?'both':m?'meat':'veg'};
+let famN=0,famW='both',famSel=null;
+const famPick=(n,w)=>{const os=[...(D.offers||[]),...(D.specials||[])].filter(o=>o.price>0&&items['o:'+o.id]).sort((a,b)=>a.price-b.price);
+  const of=k=>os.filter(o=>oKind(o)===k),mid=a=>a.find(o=>o.tag&&!/جديد/.test(o.tag))||a[Math.floor((a.length-1)/2)];
+  const V=of('veg'),M=of('meat'),B=of('both');
+  if(w==='veg'&&V.length)return n===1?[{o:V[0],q:1}]:n===2?[{o:mid(V),q:1}]:[{o:mid(V),q:2}];
+  if(w==='meat'&&M.length)return n===3?[{o:M[M.length-1],q:1}]:[{o:M[0],q:1}];
+  if(w==='both'){if(B.length)return n===3&&V.length?[{o:B[0],q:1},{o:mid(V),q:1}]:[{o:B[0],q:1}];
+    if(V.length&&M.length)return [{o:n===1?V[0]:mid(V),q:1},{o:M[0],q:1}]}
+  return os.length?[{o:mid(os),q:n===3?2:1}]:null};
+function famDraw(){const el=$('#sug');if(!famN){el.classList.remove('on');return}famSel=famPick(famN,famW);if(!famSel){el.classList.remove('on');return}
+  const tot=famSel.reduce((a,p)=>a+p.o.price*p.q,0);
+  el.innerHTML=`<span style="color:var(--mut);font-weight:700">نقترحلك:</span>`+famSel.map(({o,q})=>`<div class="pk"><b>${esc(o.name)}${q>1?' × '+q:''}</b><div style="color:var(--mut);margin-top:2px">${esc((o.items||[]).join(' + '))}</div></div>`).join('')+
+    `<div class="row"><b style="color:var(--o2)">${fmt(tot)} جنيه</b><button type="button" class="btn o" data-famadd>ضيفه للطلب</button></div>`;el.classList.add('on')}
+document.addEventListener('click',e=>{const f=e.target.closest('[data-fam]'),w=e.target.closest('[data-want]');
+  if(f){famN=+f.dataset.fam;document.querySelectorAll('[data-fam]').forEach(x=>x.classList.toggle('on',x===f));famDraw();return}
+  if(w){famW=w.dataset.want;document.querySelectorAll('[data-want]').forEach(x=>x.classList.toggle('on',x===w));famDraw();return}
+  if(e.target.closest('[data-famadd]')&&famSel){famSel.forEach(({o,q})=>{const k='o:'+o.id;if(!items[k])return;cart[k]=(cart[k]||0)+q;refresh(k)});const b=e.target.closest('[data-famadd]');b.textContent='اتضاف ✓';b.disabled=true;return}
+  const c=e.target.closest('[data-qc]');if(c){const t=$('#qText'),v=t.value.trim();t.value=(v?v+(/[،,]$/.test(v)?' ':'، '):'')+c.dataset.qc;c.classList.add('hit');qUpd();t.focus();return}});
+function qChipsDraw(){const el=$('#qChips');if(!el)return;const ps=(D.products||[]).filter(p=>!p.off&&p.name);
+  el.innerHTML=ps.map(p=>`<button type="button" data-qc="${esc((p.unit?p.unit+' ':'')+p.name)}">+ ${esc(p.name)}</button>`).join('')}
 const qUpd=()=>{const t=$('#qText').value.trim();$('#qGo').href=waLink(t?`السلام عليكم، عايز أطلب من ع الفرازة:\n\n${t}`:'السلام عليكم، عايز أطلب من ع الفرازة');};
 $('#qText').addEventListener('input',qUpd);qUpd();
 $('#qGo').addEventListener('click',e=>{if(!$('#qText').value.trim()){e.preventDefault();$('#qText').focus();$('#qText').placeholder='اكتب طلبك هنا الأول 👆'}});
