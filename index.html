@@ -295,19 +295,6 @@ body.baron .fwa{bottom:96px}
   </div>
 </section>
 
-<section class="band" id="quick" style="padding-bottom:0"><div class="wrap"><div class="quick">
-  <div class="qc"><h3>مش عارف تختار؟</h3><p>قولنا البيت كام فرد ونفسك في إيه، وإحنا نقترحلك.</p>
-    <div class="qlbl">البيت كام فرد؟</div>
-    <div class="fam"><button type="button" data-fam="1">1 – 2</button><button type="button" data-fam="2">3 – 4</button><button type="button" data-fam="3">5 وأكتر</button></div>
-    <div class="qlbl">نفسك في إيه؟</div>
-    <div class="fam"><button type="button" data-want="veg">🥬 خضار ومحشي</button><button type="button" data-want="meat">🥩 لحوم</button><button type="button" data-want="both" class="on">الاتنين</button></div>
-    <div class="sug" id="sug"></div></div>
-  <div class="qc"><h3>اكتب طلبك بكلامك</h3><p>مش حابب تدوّر؟ اكتب اللي محتاجه أو دوس على الأصناف تحت، وابعته واتساب على طول.</p>
-    <div class="qchips" id="qChips"></div>
-    <textarea id="qText" placeholder="مثلًا: 2 كيلو كرنب ونص كيلو ورق عنب ونص كيلو كفتة، والتوصيل يوم الخميس الساعة 5"></textarea>
-    <a class="btn wa go" id="qGo" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>ابعت طلبك على واتساب</a></div>
-</div></div></section>
-
 <section class="band" id="specials" hidden><div class="wrap">
   <div class="head"><div><h2 style="color:var(--o2)">عروض خاصة</h2><p class="lead">عروض لفترة محدودة، الحق قبل ما تخلص.</p></div></div>
   <div class="offers" id="specialList"></div>
@@ -405,7 +392,7 @@ D.products.forEach(p=>items['p:'+p.id]={name:p.name+(p.sub?' '+p.sub:''),price:p
 
 const ctl=k=>cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
 
-function draw(){try{qChipsDraw()}catch(_){}
+function draw(){
   if(SP.length){$('#specials').hidden=false;
     $('#specialList').innerHTML=SP.map(o=>{const e=o.ends?o.ends.split('-'):null;return `<article class="of sp"><span class="tag">لفترة محدودة</span>
     <h3>${esc(o.name)}</h3><ul>${(o.items||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${e?`<div class="ends">العرض لحد ${+e[2]}/${+e[1]}</div>`:''}
@@ -433,31 +420,6 @@ function draw(){try{qChipsDraw()}catch(_){}
 function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
 function waLink(text){return `https://wa.me/${D.whatsapp}?text=${encodeURIComponent(text)}`}
 /* quick order: family helper + free text */
-const MEATRE=/لحم|كفتة|برجر|سجق|شاورما|كبدة|مفروم/,VEGRE=/كرنب|ورق عنب|ملوخية|طماطم|فاصوليا|بنجر|قلقاس|سلق|هريسة|محشي/;
-const oKind=o=>{const t=(o.items||[]).join(' ')+' '+o.name,m=MEATRE.test(t),v=VEGRE.test(t);return m&&v?'both':m?'meat':'veg'};
-let famN=0,famW='both',famSel=null;
-const famPick=(n,w)=>{const os=[...(D.offers||[]),...(D.specials||[])].filter(o=>o.price>0&&items['o:'+o.id]).sort((a,b)=>a.price-b.price);
-  const of=k=>os.filter(o=>oKind(o)===k),mid=a=>a.find(o=>o.tag&&!/جديد/.test(o.tag))||a[Math.floor((a.length-1)/2)];
-  const V=of('veg'),M=of('meat'),B=of('both');
-  if(w==='veg'&&V.length)return n===1?[{o:V[0],q:1}]:n===2?[{o:mid(V),q:1}]:[{o:mid(V),q:2}];
-  if(w==='meat'&&M.length)return n===3?[{o:M[M.length-1],q:1}]:[{o:M[0],q:1}];
-  if(w==='both'){if(B.length)return n===3&&V.length?[{o:B[0],q:1},{o:mid(V),q:1}]:[{o:B[0],q:1}];
-    if(V.length&&M.length)return [{o:n===1?V[0]:mid(V),q:1},{o:M[0],q:1}]}
-  return os.length?[{o:mid(os),q:n===3?2:1}]:null};
-function famDraw(){const el=$('#sug');if(!famN){el.classList.remove('on');return}famSel=famPick(famN,famW);if(!famSel){el.classList.remove('on');return}
-  const tot=famSel.reduce((a,p)=>a+p.o.price*p.q,0);
-  el.innerHTML=`<span style="color:var(--mut);font-weight:700">نقترحلك:</span>`+famSel.map(({o,q})=>`<div class="pk"><b>${esc(o.name)}${q>1?' × '+q:''}</b><div style="color:var(--mut);margin-top:2px">${esc((o.items||[]).join(' + '))}</div></div>`).join('')+
-    `<div class="row"><b style="color:var(--o2)">${fmt(tot)} جنيه</b><button type="button" class="btn o" data-famadd>ضيفه للطلب</button></div>`;el.classList.add('on')}
-document.addEventListener('click',e=>{const f=e.target.closest('[data-fam]'),w=e.target.closest('[data-want]');
-  if(f){famN=+f.dataset.fam;document.querySelectorAll('[data-fam]').forEach(x=>x.classList.toggle('on',x===f));famDraw();return}
-  if(w){famW=w.dataset.want;document.querySelectorAll('[data-want]').forEach(x=>x.classList.toggle('on',x===w));famDraw();return}
-  if(e.target.closest('[data-famadd]')&&famSel){famSel.forEach(({o,q})=>{const k='o:'+o.id;if(!items[k])return;cart[k]=(cart[k]||0)+q;refresh(k)});const b=e.target.closest('[data-famadd]');b.textContent='اتضاف ✓';b.disabled=true;return}
-  const c=e.target.closest('[data-qc]');if(c){const t=$('#qText'),v=t.value.trim();t.value=(v?v+(/[،,]$/.test(v)?' ':'، '):'')+c.dataset.qc;c.classList.add('hit');qUpd();t.focus();return}});
-function qChipsDraw(){const el=$('#qChips');if(!el)return;const ps=(D.products||[]).filter(p=>!p.off&&p.name);
-  el.innerHTML=ps.map(p=>`<button type="button" data-qc="${esc((p.unit?p.unit+' ':'')+p.name)}">+ ${esc(p.name)}</button>`).join('')}
-const qUpd=()=>{const t=$('#qText').value.trim();$('#qGo').href=waLink(t?`السلام عليكم، عايز أطلب من ع الفرازة:\n\n${t}`:'السلام عليكم، عايز أطلب من ع الفرازة');};
-$('#qText').addEventListener('input',qUpd);qUpd();
-$('#qGo').addEventListener('click',e=>{if(!$('#qText').value.trim()){e.preventDefault();$('#qText').focus();$('#qText').placeholder='اكتب طلبك هنا الأول 👆'}});
 
 function bar(){
   const ks=Object.keys(cart).filter(k=>cart[k]>0), total=ks.reduce((s,k)=>s+items[k].price*cart[k],0);
