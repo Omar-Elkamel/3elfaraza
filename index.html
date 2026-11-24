@@ -399,7 +399,7 @@ function draw(){
     <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small></div><span id="c-o:${esc(o.id)}">${ctl('o:'+o.id)}</span></div></article>`).join('');
   const row=p=>`<div class="it"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
     <div class="p">${fmt(p.price)}<small>${esc(p.unit)}</small></div><div class="qtyc" id="c-p:${esc(p.id)}">${ctl('p:'+p.id)}</div></div>`;
-  const MG=[['','خضار ومحشي','تجهيزات ع الفرازة'],['meat','لحوم مجمدة','برازيلي مستورد · توريد أسواق الدالي للمجمدات']].map(([c,t,sub])=>({c,t,sub,ps:D.products.filter(p=>(p.cat||'')===c)})).filter(g=>g.ps.length);
+  const MG=[['','خضار ومحشي','تجهيزات ع الفرازة'],['meat','لحوم مجمدة','توريد أسواق الدالي للمجمدات']].map(([c,t,sub])=>({c,t,sub,ps:D.products.filter(p=>(p.cat||'')===c)})).filter(g=>g.ps.length);
   const drawMenu=sel=>{$('#menuWrap').innerHTML=MG.filter(g=>sel==null||g.c===sel).map(g=>`${MG.length>1?`<div class="mgh"><h3>${g.t}</h3><span>${g.sub}</span></div>`:''}<div class="menu">${g.ps.map(row).join('')}</div>`).join('');
     document.querySelectorAll('#mtabs button').forEach(b=>b.classList.toggle('on',(b.dataset.mc===''+'all'&&sel==null)||b.dataset.mc===sel))};
   if(MG.length>1){$('#mtabs').hidden=false;$('#mtabs').innerHTML=`<button type="button" data-mc="all">الكل</button>`+MG.map(g=>`<button type="button" data-mc="${g.c}">${g.c==='meat'?'🥩 ':'🥬 '}${g.t}</button>`).join('');
@@ -411,7 +411,7 @@ function draw(){
   if(!ph.length&&!D.featurePhoto)$('#real').hidden=true;
   const br=D.brands||[];
   if(br.length){$('#soon').hidden=true;const g=$('#brandList');g.hidden=false;
-    g.innerHTML=br.map((b,i)=>`<article class="of">${b.photo?`<img src="${esc(b.photo)}" alt="" style="width:100%;border-radius:14px;margin-bottom:8px">`:''}<span class="tag">🤝 شريك نجاح</span><h3>${esc(b.name)}</h3><div>${esc(b.product)}</div><p class="note" style="margin:0">${esc(b.note||'')}</p>${b.cat?`<a class="btn o" href="#menu" data-gomc="${esc(b.cat)}" style="justify-content:center;margin-top:6px">شوف منتجاتهم والأسعار</a>`:''}
+    g.innerHTML=br.map((b,i)=>`<article class="of">${b.photo?`<img src="${esc(b.photo)}" alt="" style="width:100%;border-radius:14px;margin-bottom:8px">`:''}<span class="tag">🤝 شريك نجاح</span><h3>${esc(b.name)}</h3><div>${esc(b.product)}</div><p class="note" style="margin:0">${esc(b.note||'')}</p>${b.cat?`<a class="btn o" href="#menu" data-gomc="${esc(b.cat)}" style="justify-content:center;margin-top:6px">شوف منتجاتهم عندنا</a>`:''}
     ${b.price?`<div class="row"><div class="price">${fmt(b.price)} <small>${esc(b.unit||'جنيه')}</small></div><span id="c-b:${i}">${ctl('b:'+i)}</span></div>`:''}</article>`).join('')}
 }
 function refresh(k){const el=document.getElementById('c-'+k);if(el){el.innerHTML=ctl(k);const q=el.querySelector('.qty span,.add');if(q)q.classList.add('pop')}bar();const t=$('#tot');t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}
