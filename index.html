@@ -149,6 +149,7 @@ footer small{display:block;opacity:.75;margin-top:6px}
 /* cart bar */
 .bar{position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(0,0,0,.12);transform:translateY(110%);transition:transform .25s}
 .bar.on{transform:none}
+.so{opacity:.6}.so .price,.so .p{text-decoration:line-through}.soonb{display:inline-block;font-size:12.5px;font-weight:800;color:var(--o2,#c2410c);border:1.5px dashed currentColor;border-radius:999px;padding:5px 10px;white-space:nowrap;opacity:1}
 .fwa{position:fixed;left:16px;bottom:18px;z-index:31;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.25);transition:bottom .25s,transform .2s}
 .fwa:hover{transform:scale(1.07)}.fwa svg{width:30px;height:30px}
 body.baron .fwa{bottom:96px}
@@ -386,29 +387,32 @@ const items={};
 const tday=new Date().toISOString().slice(0,10);
 const SP=(D.specials||[]).filter(s=>!s.ends||s.ends>=tday);
 SP.forEach(o=>items['s:'+o.id]={name:o.name,price:o.price,detail:(o.items||[]).join(' + ')});
-D.offers.forEach(o=>items['o:'+o.id]={name:o.name,price:o.price,detail:o.items.join(' + ')});
-D.products.forEach(p=>items['p:'+p.id]={name:p.name+(p.sub?' '+p.sub:''),price:p.price,detail:p.unit});
+D.offers.forEach(o=>{if(!o.state)items['o:'+o.id]={name:o.name,price:o.price,detail:(o.items||[]).join(' + ')}});
+D.products.forEach(p=>{if(!p.state)items['p:'+p.id]={name:p.name+(p.sub?' '+p.sub:''),price:p.price,detail:p.unit}});
 (D.brands||[]).forEach((b,i)=>{if(b.price)items['b:'+i]={name:b.name+' — '+b.product,price:b.price,detail:b.unit||''}});
 
-const ctl=k=>cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
+const SOON='<span class="soonb">خلص · بيرجع قريب</span>';
+const ctl=k=>!items[k]?SOON:cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
 
 function draw(){
   if(SP.length){$('#specials').hidden=false;
     $('#specialList').innerHTML=SP.map(o=>{const e=o.ends?o.ends.split('-'):null;return `<article class="of sp"><span class="tag">لفترة محدودة</span>
     <h3>${esc(o.name)}</h3><ul>${(o.items||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${e?`<div class="ends">العرض لحد ${+e[2]}/${+e[1]}</div>`:''}
     <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small>${o.oldPrice?`<span class="old">${fmt(o.oldPrice)}</span>`:''}</div><span id="c-s:${esc(o.id)}">${ctl('s:'+o.id)}</span></div></article>`}).join('')}
-  $('#offerList').innerHTML=D.offers.map(o=>`<article class="of${o.tag?' hot':''}">${o.tag?`<span class="tag">${esc(o.tag)}</span>`:''}
-    <h3>${esc(o.name)}</h3><ul>${o.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
+  $('#offerList').innerHTML=D.offers.map(o=>`<article class="of${o.tag&&!o.state?' hot':''}${o.state?' so':''}">${o.tag&&!o.state?`<span class="tag">${esc(o.tag)}</span>`:''}
+    <h3>${esc(o.name)}</h3><ul>${(o.items||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
     <div class="row"><div class="price">${fmt(o.price)} <small>جنيه</small></div><span id="c-o:${esc(o.id)}">${ctl('o:'+o.id)}</span></div></article>`).join('');
-  const row=p=>`<div class="it"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
+  const row=p=>`<div class="it${p.state?' so':''}"><div><b>${esc(p.name)}</b> <span class="s">${esc(p.sub)}</span></div>
     <div class="p">${fmt(p.price)}<small>${esc(p.unit)}</small></div><div class="qtyc" id="c-p:${esc(p.id)}">${ctl('p:'+p.id)}</div></div>`;
-  const MG=[['','خضار ومحشي','تجهيزات ع الفرازة'],['meat','لحوم مجمدة','توريد أسواق الدالي للمجمدات']].map(([c,t,sub])=>({c,t,sub,ps:D.products.filter(p=>(p.cat||'')===c)})).filter(g=>g.ps.length);
+  const GDEF={'':['خضار ومحشي','تجهيزات ع الفرازة','🥬 '],meat:['لحوم مجمدة','توريد أسواق الدالي للمجمدات','🥩 ']};
+  const GL=(D.cats&&D.cats.length?D.cats:[{k:''},{k:'meat'}]).map(c=>{const g=GDEF[c.k];return g?[c.k,g[0],g[1],g[2]]:[c.k,c.name||'',' ','']});
+  const MG=GL.map(([c,t,sub,ic])=>({c,t,sub,ic,ps:D.products.filter(p=>(p.cat||'')===c)})).filter(g=>g.ps.length);
   const drawMenu=sel=>{$('#menuWrap').innerHTML=MG.filter(g=>sel==null||g.c===sel).map(g=>`${MG.length>1?`<div class="mgh"><h3>${g.t}</h3><span>${g.sub}</span></div>`:''}<div class="menu">${g.ps.map(row).join('')}</div>`).join('');
     document.querySelectorAll('#mtabs button').forEach(b=>b.classList.toggle('on',(b.dataset.mc===''+'all'&&sel==null)||b.dataset.mc===sel))};
-  if(MG.length>1){$('#mtabs').hidden=false;$('#mtabs').innerHTML=`<button type="button" data-mc="all">الكل</button>`+MG.map(g=>`<button type="button" data-mc="${g.c}">${g.c==='meat'?'🥩 ':'🥬 '}${g.t}</button>`).join('');
+  if(MG.length>1){$('#mtabs').hidden=false;$('#mtabs').innerHTML=`<button type="button" data-mc="all">الكل</button>`+MG.map(g=>`<button type="button" data-mc="${esc(g.c)}">${g.ic}${esc(g.t)}</button>`).join('');
     $('#mtabs').addEventListener('click',e=>{const b=e.target.closest('[data-mc]');if(b)drawMenu(b.dataset.mc==='all'?null:b.dataset.mc)})}
   drawMenu(null);window.fzMenu=drawMenu;
-  const ph=D.products.filter(p=>p.photo);
+  const ph=D.products.filter(p=>p.photo&&!p.state);
   $('#gal').innerHTML=(D.featurePhoto?`<figure class="ph wide" data-lb="${esc(D.featurePhoto)}" data-t="من شغلنا" data-s="تجهيزات متغلفة وجاهزة للتوصيل"><img src="${esc(D.featurePhoto)}" alt="تجهيزات ع الفرازة متغلفة وجاهزة" loading="lazy"><figcaption><div><b>من شغلنا</b><small>كل علبة متغلفة وعليها اللوجو</small></div></figcaption></figure>`:'')+
     ph.map(p=>`<figure class="ph" data-lb="${esc(p.photo)}" data-t="${esc(p.name)} ${esc(p.sub)}" data-s="${fmt(p.price)} جنيه / ${esc(p.unit)}"><img src="${esc(p.photo)}" alt="${esc(p.name)} من ع الفرازة" loading="lazy"><figcaption><div><b>${esc(p.name)}</b><small>${esc(p.sub||p.unit)}</small></div><span class="pp">${fmt(p.price)}</span></figcaption></figure>`).join('');
   if(!ph.length&&!D.featurePhoto)$('#real').hidden=true;
@@ -526,8 +530,9 @@ try{
     import('./fbconfig.js')]);
   const db=getFirestore(initializeApp(FIREBASE_CONFIG));
   window.fzInbox=d=>addDoc(collection(db,'inbox'),d).catch(e=>console.warn('inbox',e));
-  const s=await getDoc(doc(db,'site','main'));
+  const [s,cs]=await Promise.all([getDoc(doc(db,'site','main')),getDoc(doc(db,'site','catalog')).catch(()=>null)]);
   if(s.exists()&&!booted){const data=s.data(),refs=new Set();
+    const cat=cs&&cs.exists()?cs.data():null;if(cat&&Array.isArray(cat.products)&&cat.products.length){data.products=cat.products;data.offers=cat.offers||[];data.cats=cat.cats||null;data.fromLedger=true;if(cat.at){const t=new Date(cat.at);data.updated=`${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`}}
     JSON.stringify(data).replace(/"fs:([\w-]+)"/g,(_,id)=>refs.add(id));
     const imgs={};await Promise.all([...refs].map(async id=>{try{const d=await getDoc(doc(db,'siteImages',id));if(d.exists())imgs[id]=d.data().data}catch(_){}}));
     const fix=v=>typeof v==='string'&&v.startsWith('fs:')?(imgs[v.slice(3)]||''):Array.isArray(v)?v.map(fix):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,fix(x)])):v;
