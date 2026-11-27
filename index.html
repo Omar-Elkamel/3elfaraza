@@ -399,7 +399,7 @@ D.products.forEach(p=>{if(!p.state)items['p:'+p.id]={name:p.name+(p.sub?' '+p.su
 (D.brands||[]).forEach((b,i)=>{if(b.price)items['b:'+i]={name:b.name+' — '+b.product,price:b.price,detail:b.unit||''}});
 
 const SOON='<span class="soonb">خلص · بيرجع قريب</span>';
-const ctl=k=>!items[k]?SOON+(k.startsWith('p:')?`<button class="ntf" data-ntf="${esc(k.slice(2))}">🔔 نبّهني لما يرجع</button>`:''):cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
+const ctl=k=>!items[k]?SOON+(k.startsWith('p:')?`<button class="ntf" data-ntf="${esc(k.slice(2).split('~')[0])}">🔔 نبّهني لما يرجع</button>`:''):cart[k]?`<div class="qty"><button data-dec="${k}" aria-label="أقل">−</button><span>${cart[k]}</span><button data-inc="${k}" aria-label="أكتر">+</button></div>`:`<button class="add" data-inc="${k}">ضيف +</button>`;
 
 function draw(){
   if(SP.length){$('#specials').hidden=false;
