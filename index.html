@@ -451,8 +451,8 @@ const ckWhen=()=>{const d=ckDate(),f=$('#ckF').value,t=$('#ckT').value;if(!d&&!f
   const tm=f&&t?`من ${tTxt(f)} لـ ${tTxt(t)}`:f?`من ${tTxt(f)}`:t?`قبل ${tTxt(t)}`:'';
   return{iso:d?isoD(d):'',label:[d?`يوم ${DAYS2[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`:'',tm].filter(Boolean).join(' '),from:f||'',to:t||''}};
 let ckPick=false,ckPayM='cash',ckProof='',ckTk='';
-const DLV=[];const LOCAL=D.localFrom||30;const SHIP=D.ship||{from:150,to:250};const PAYI=D.pay||{};const CAP=D.cap||{full:[],offW:[],offD:[]};
-$('#ckArea').innerHTML='<option value="">اختار…</option>'+`<option value="d">داخل دمياط (توصيل داخلي من ${fmt(LOCAL)} جنيه حسب المكان)</option>`+`<option value="g">محافظة تانية (شحن من ${fmt(SHIP.from)} لـ ${fmt(SHIP.to)} جنيه)</option>`;
+const DLV=(D.delivery||[]).filter(d=>d.place&&!/القديم/.test(d.place));const LOCAL=D.localFrom||30;const SHIP=D.ship||{from:150,to:250};const PAYI=D.pay||{};const CAP=D.cap||{full:[],offW:[],offD:[]};
+$('#ckArea').innerHTML='<option value="">اختار…</option>'+`<option value="d">داخل دمياط (توصيل داخلي من ${fmt(LOCAL)} جنيه حسب المكان)</option>`+DLV.map((d,i)=>`<option value="${i}">${esc(d.place)} (توصيل ${fmt(d.price)} جنيه)</option>`).join('')+`<option value="g">محافظة تانية (شحن من ${fmt(SHIP.from)} لـ ${fmt(SHIP.to)} جنيه)</option>`;
 const PAYS=[['cash','💵 كاش عند الاستلام'],...(PAYI.insta?[['insta','📱 إنستاباي']]:[]),...(PAYI.wallet?[['wallet','👛 محفظة']]:[])];
 if(PAYS.length>1){$('#ckPayW').hidden=false;$('#ckPay').innerHTML=PAYS.map(([k,l])=>`<button type="button" data-ckp="${k}" class="${k==='cash'?'on':''}">${l}</button>`).join('')}
 const dayBad=iso=>{if(!iso)return'';const [y,m,d]=iso.split('-').map(Number),wd=new Date(y,m-1,d).getDay();if((CAP.offD||[]).includes(iso)||(CAP.offW||[]).includes(wd))return'اليوم ده إجازة عندنا، اختار يوم تاني 🙏';if((CAP.full||[]).includes(iso))return'اليوم ده اتملى، اختار يوم تاني 🙏';return''};
@@ -517,7 +517,7 @@ const hello=waLink('السلام عليكم، عايز أسأل عن منتجا�
 $('#fFb').href=D.facebook;
 if(D.address){$('#addr').textContent=D.address;$('#faddr').textContent='مكان التجهيز: '+D.address}
 if(D.mapUrl)$('#mapA').href=D.mapUrl;else $('#mapA').hidden=true;
-$('#dlv').innerHTML=`<div class="dl"><span>توصيل داخلي في دمياط<br><small class="note" style="font:600 12px Cairo">بيختلف حسب المكان</small></span><b>من ${fmt(D.localFrom||30)} <small style="font:600 13px Cairo">جنيه</small></b></div>`+`<div class="dl"><span>شحن لباقي المحافظات</span><b>${fmt((D.ship||{from:150}).from)}–${fmt((D.ship||{to:250}).to)} <small style="font:600 13px Cairo">جنيه</small></b></div>`;$('#fTt').href=D.tiktok;$('#ph').textContent=D.phone;
+$('#dlv').innerHTML=`<div class="dl"><span>توصيل داخلي في دمياط<br><small class="note" style="font:600 12px Cairo">بيختلف حسب المكان</small></span><b>من ${fmt(D.localFrom||30)} <small style="font:600 13px Cairo">جنيه</small></b></div>`+(D.delivery||[]).filter(d=>d.place&&!/القديم/.test(d.place)).map(d=>`<div class="dl"><span>${esc(d.place)}</span><b>${fmt(d.price)} <small style="font:600 13px Cairo">جنيه</small></b></div>`).join('')+`<div class="dl"><span>شحن لباقي المحافظات</span><b>${fmt((D.ship||{from:150}).from)}–${fmt((D.ship||{to:250}).to)} <small style="font:600 13px Cairo">جنيه</small></b></div>`;$('#fTt').href=D.tiktok;$('#ph').textContent=D.phone;
 document.querySelectorAll('.area').forEach(el=>el.textContent=D.area);
 $('#fCount').textContent=D.products.length;
 if(D.updated){const [y,m,d]=D.updated.split('-');$('#upd').textContent=`آخر تحديث للأسعار: ${+d}/${+m}/${y}`}
